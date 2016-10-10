@@ -26,7 +26,7 @@ namespace MokkelMod.Content.Unreleased.Worlds
 				}
 			}
 			//fourth on each side
-				WorldMethods.TempleBasee(X, (Y - height / 2) + 5, 2, (height / 3) + 8, type, 3, true, (ushort)2);
+				WorldMethods.TempleBasee(X, (Y - height / 2) - 6, 2, (height / 3) + 8, type, 3, true, (ushort)2);
 		}
 		public static void TempleBasee(int X, int Y, int length, int height, ushort type2, float slope, bool replace, ushort replacetile)
 		{

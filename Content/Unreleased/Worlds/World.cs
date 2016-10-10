@@ -27,7 +27,7 @@ namespace MokkelMod.Content.Unreleased.Worlds
 			}
 			tasks.Insert(ShiniesIndex +  1, new PassLegacy("JadeTemple", delegate(GenerationProgress progress)
 			{
-                progress.Message = "Sealing away spirits; Generating island";
+                progress.Message = "Sealing away spirits";
 				
 				//island gen
 				int XTILE = WorldGen.genRand.Next(300, Main.maxTilesX - 1000);
@@ -49,14 +49,14 @@ namespace MokkelMod.Content.Unreleased.Worlds
 			}
 			
 			//temple gen
-			progress.Message = "Sealing away spirits; Creating base";
+		//	progress.Message = "Sealing away spirits; Creating base";
 			int center = XTILE + 75;
-			int centerY = yAxis - 16;
-			WorldMethods.TempleBasee(center, centerY, 20, 13, (ushort)30, 1, false, (ushort)2);
+			int centerY = yAxis - 20;
+			WorldMethods.TempleBasee(center, centerY, 14, 13, (ushort)30, 1, false, (ushort)2);
 			
 			//rooftop
 			
-			progress.Message = "Sealing away spirits; Building roof";
+		//	progress.Message = "Sealing away spirits; Building roof";
 			int baseY = yAxis - 30;
 			WorldMethods.TempleRoof((int)center, (int)baseY, 55, 55, 190, 312);
 			
