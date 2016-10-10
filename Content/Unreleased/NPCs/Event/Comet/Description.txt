@@ -1,0 +1,13 @@
+Comet Slime and Head are pretty equal
+And then Cometbusters (the humanoids) are a bit less common
+And the Starstroller UFO thingies are the most rare, they also spawn more Cometbusters
+A bit rarer
+Mokkel - Last Friday at 6:06 PM
+The Comet Slimes jump and behave like the different spiky slimes(edited)
+Comet Heads fly at you through blocks, getting faster the closer it is to you (if that's possible)
+Oh and btw, the Comet Head should leave behind a trail of blue and orange dust too
+But as I was saying, some Cometbusters run at you, occasionally doing a charge where it is much faster, leaving behind blue and orange dust. Others wield a gun (sprite needed) and run slower, occasionally shooting at you.
+The Starstroller (UFO thingy) shoots barrages of lasers at you and fly around, while also calling down damaging comets from the sky. Sometimes it spawns Cometbusters.
+(Both variants)
+Comets fall frequently during the event. They deal damage to both Players and mobs (unsure about that). The ones the Starstroller calls down don't drop anything.
+But the regular ones drop a comet item when hitting the ground

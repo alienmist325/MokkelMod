@@ -1,0 +1,20 @@
+Idea for Whips:
+it could be a more defensive melee subtree
+so when you hit enemies they get confused and can't move
+and whilst they aren't moving, you can move them around with the whip(edited)
+hold to throw whip(edited)
+let go to retract(edited)
+enemies can act as weapons
+so whilst they are confused, they will go in the general direction you sent them in after releasing the whip
+and deal damage to other enemies(edited)
+Y/N?
+not sure how possible that is
+you can grab them and throw them away
+or stun them
+we can make insta-retract have no knockback
+but then bosses make you retract immediately
+as you can't grab hold of them
+it has to retract entirely first
+and the point is that it is a tradeoff
+Shall we make whips get crits if you release immediately
+maybe instead of hold and throw any monster currently stunned with the whip can be knocked back a long distance?

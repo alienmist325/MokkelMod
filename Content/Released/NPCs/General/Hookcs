@@ -1,0 +1,362 @@
+using System;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace MokkelMod.Content.Sprites.NPCs.General
+{
+	public class BroodMother : ModNPC
+	{	
+		//general
+		int w = 260;
+		int h = 276;
+		byte phase = 0;
+		int qnt; //1 top left, going clockwise	
+		//FindNPI
+		byte NPI;//nearest player index
+		float curDist = 0;
+		float minDist = 0;
+		Vector2 curVect;
+		Vector2 minVect;
+		
+		//Select frame
+		int[] timer = new int[2];
+		byte frameNum;
+		
+		//Draw sprite
+		float rot;
+		Vector2 screenPos;
+		Texture2D brdMthr;
+		Rectangle drawnRegion;
+		SpriteEffects se;
+		
+		//Mouth locating
+		float dMth; //distance
+		float aMth; //angle
+		Vector2 vMth; //vector
+		Vector2 rvMth; //vector after sprite is rotated.
+		Vector2 pMth; //position
+		
+		//Move to point
+		Vector2 movement;
+		
+		Vector2 target;
+		Vector2 startPos;
+		int tqnt;
+		float trot;
+		bool finSweep;
+		
+		int[] pos = new int[2] {-1,-1};
+		bool wasActive;
+		int type = -1;
+		
+		
+		public override void SetDefaults()
+		{
+			npc.name = "Brood Mother";
+			npc.width = 260;
+			npc.height = 276 - 128 - 84;
+			npc.lifeMax = 4000;
+			npc.noGravity = true;
+			npc.damage = 10;
+			npc.defense = 8;
+			npc.noTileCollide = true;
+			npc.soundHit = 2;
+			npc.soundKilled = 5;
+			npc.timeLeft = NPC.activeTime * 30;
+			npc.boss = true;
+			npc.value = 100000f;
+			npc.knockBackResist = 0f;
+			Main.npcFrameCount[npc.type] = 2;
+		}
+		
+		public override void AI()
+		{
+			PlaceBlock();
+			FindNPI();
+			for(int i = 0; i < 1000; i++)
+			{
+				if (Main.projectile[i].active)
+				{
+					if (isHook(Main.projectile[i].type) && (Main.projectile[i].position - npc.position).Length() < 300)
+					{
+						Main.NewText("It works!");
+					}
+				}
+				else
+				{
+					i = 1000;
+				}
+			}
+			if (phase == 0)
+			{
+				//shoot sand spits
+				FindVector(5,Main.player[NPI].Center + new Vector2(-400,-300),true);
+				Shoot();
+			}
+			if (phase == 1)
+			{
+				if((npc.position - target).Length() > 200)
+				{
+					//still swooping
+					npc.position.Y = MathHelper.Lerp(npc.position.Y,target.Y,0.05f);
+				}
+				else
+				{
+					npc.position = target;
+					npc.velocity = Vector2.Zero;
+					phase++;
+					timer[1] = 0;
+				}
+
+				Projectile.NewProjectile(pMth,Vector2.Zero,mod.ProjectileType("Fireball"),0,0f);
+				FindQuadrant(ref tqnt,ref trot, target - npc.Center);
+				if(tqnt == 2 || tqnt == 3)
+				{
+					npc.velocity.X = 8f;
+				}
+				else
+				{
+					npc.velocity.X = -8f;
+				}
+			}
+			if (phase == 2)
+			{
+				//shoot sand spits
+				FindVector(5,Main.player[NPI].Center + new Vector2(0,-400),true);
+				Shoot();
+			}
+		}
+		
+		public bool isHook(int a)
+		{
+			int[] hook = new int[26] {652,649,648,647,646,489,488,487,486,446,403,396,372,332,331,322,315,235,234,233,232,231,230,74,73,13};
+			for(int i = 0; i < 25; i++)
+			{
+				if(a == hook[i])
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public void Shoot()
+		{
+			if(timer[1] % 60 == 0)
+			{
+				for(int i = 0; i < 5;i++)
+				{
+					Projectile.NewProjectile(pMth,FindVector(10,Main.player[NPI].Center + new Vector2(Main.rand.Next(-100*i,100*i),Main.rand.Next(-100*i,100*i)),false),mod.ProjectileType("SandSpit"),1,0f);
+				}
+				
+			}
+		}
+		
+		public void PlaceBlock()
+		{
+			if (pos[0] != -1)
+			{
+				if(wasActive)
+				{
+					Main.tile[pos[0],pos[1]].type = (ushort)type;
+					wasActive = false;
+				}
+				else
+				{
+					Main.tile[pos[0],pos[1]].active(false);
+				}
+				if(Main.tile[pos[0],pos[1]].active())
+				{
+					type = Main.tile[pos[0],pos[1]].type;
+					wasActive = true;
+				}
+				
+			}
+			pos[0] = (int)(npc.Center.X/16);
+			pos[1] = (int)(npc.Center.Y/16);
+			Main.tile[pos[0],pos[1]].active(true);
+		}
+		public void FindNPI()
+		{
+			for(byte i = 0; i < 254; i++)
+			{
+				if (Main.player[i].active)
+				{
+					minDist = 0;
+					curVect = Main.player[i].Center - npc.Center;
+					curDist = curVect.Length(); //distance between npc and player
+					
+					if (curDist < minDist||minDist == 0)
+					{
+						NPI = i;
+						minDist = curDist;
+						minVect = curVect;
+					}
+				}
+				else
+				{
+					i = 254; //break from cycle because all proceeding positions will be null.
+				}
+			}
+		}
+		
+		public void Counter()
+		{
+			//frame control
+			timer[0]++;
+			if(timer[0] == 5)
+			{
+				frameNum = 1;
+			}
+			if(timer[0] == 10)
+			{
+				frameNum = 0;
+				timer[0] = 0;
+			}
+			//sand spit
+			timer[1]++;
+			if(timer[1] == 600 && phase == 0)
+			{
+				target = Main.player[NPI].Center;
+				phase++;
+				
+			}
+			if(phase == 3)
+			{
+				phase = 0;
+			}
+		}
+		
+		public void AssignDrawVars()
+		{
+			screenPos = npc.position - Main.screenPosition;
+			screenPos -= new Vector2(0,128);
+			screenPos += new Vector2(w/2,h/2);
+			brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMother");
+			drawnRegion = new Rectangle(0,frameNum*h,w,h);
+			FindQuadrant(ref qnt,ref rot,minVect);
+			Main.NewText(qnt.ToString());
+		}
+		
+		public void FindQuadrant(ref int q, ref float r,Vector2 v)
+		{
+			// q is quadrant, r is rotation, v is vector
+			r = (float)Math.Atan2(v.Y,v.X);
+			r += 3.14f; 
+			q = tIneq(r,0,90) ? 1 : q;
+			q = tIneq(r,90,180) ? 2 : q;
+			q = tIneq(r,180,270) ? 3 : q;
+			q = tIneq(r,270,360) ? 4 : q;
+		}
+		
+		public float dtr(int a)
+		{
+			//degrees to radians
+			return (float)MathHelper.ToRadians(a);
+		}
+		
+		public bool tIneq(float n,int s,int g)
+		{
+			//test inequality g is greater, s is smaller
+			return (dtr(s) < n && n < dtr(g));
+		}
+		
+		public void RestrictRot()
+		{
+			Main.NewText(MathHelper.ToDegrees(rot).ToString());
+			//restrict rotation
+			//left
+			if (qnt == 1 && rot > dtr(10))
+			{
+				rot = dtr(10);
+				se = SpriteEffects.None;
+			}
+			if (qnt == 4 && rot < dtr(350))
+			{
+				rot = dtr(350);
+				se = SpriteEffects.None;
+			}
+			//right
+			if (qnt == 2 && rot < dtr(170))
+			{
+				rot = dtr(170);
+				se = SpriteEffects.FlipHorizontally;
+			}
+			if (qnt == 3 && rot > dtr(190))
+			{
+				rot = dtr(190);
+				se = SpriteEffects.FlipHorizontally;
+			}
+
+		}
+		
+		public void FindMouth()
+		{
+			vMth = new Vector2(-118,51);
+			dMth = (float)vMth.Length();
+			aMth = (float)Math.Atan2(vMth.Y,vMth.X);
+			
+			if(qnt == 1 || qnt == 4)
+			{
+				aMth += rot;
+				rot += 3.14f;
+			}
+			if(qnt == 2 || qnt == 3)
+			{
+				aMth *= -1;
+				aMth += rot;
+			}
+			
+			rvMth.Y = (float)Math.Sin(aMth)*dMth;
+			rvMth.X = (float)Math.Cos(aMth)*dMth;
+			pMth = npc.Center + rvMth; 
+		}
+		
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			if (!Main.gamePaused)
+			{
+				Counter();
+				AssignDrawVars();
+				// to make it 0 - 360, rather than 0 - 180 then 0 - -180
+				RestrictRot();
+				FindMouth();
+				rot += 3.14f; // put it back to normal
+			}
+			
+			spriteBatch.Draw(brdMthr,screenPos,drawnRegion,drawColor,rot,new Vector2(w/2,h/2),1f,se,0);
+			
+			return false;
+		}		
+		
+		public Vector2 FindVector(int speed, Vector2 center, bool move)
+		{
+			movement = center - npc.Center;
+			
+			if(move)
+			{
+				if (movement.Length() < 5)
+				{
+					npc.position = center - (npc.Center - npc.position);
+					npc.velocity = Vector2.Zero;
+				}
+				else
+				{
+					movement.Normalize();
+					movement *= speed;
+					npc.velocity = movement;
+				}
+			}
+			else
+			{
+				movement.Normalize();
+				movement *= speed;
+			}
+			
+			return movement;
+		}
+	}
+}

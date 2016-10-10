@@ -1,0 +1,9 @@
+author = mastermokkel
+version = 1.0
+displayName = Mokkel's Mod
+homepage = http://forums.terraria.org/index.php?threads/mokkels-mod-v1-0-coders-and-spriters-wanted.41745/
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, .git\*, _UnusedSprites\*
+includePDB = true
