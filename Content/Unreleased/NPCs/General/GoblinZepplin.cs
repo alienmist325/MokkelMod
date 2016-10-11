@@ -12,7 +12,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
         public override void SetDefaults()
         {
             npc.noTileCollide = true;
-            npc.name = "GoblinZepplin";
+            npc.name = "Goblin Zepplin";
             npc.width = 216;
             npc.height = 140;
             npc.aiStyle = -1;
@@ -31,7 +31,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
             int NPCPosY = (int)(npc.position.Y + npc.height);
             int PlayerPos = (int)Main.player[npc.target].position.Y;
-            int BlockDistanceFromPly = 20;
+            int BlockDistanceFromPly = 13;
 
             npc.TargetClosest(true);
 
@@ -48,9 +48,9 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
         //Ported from flying duchman ai
             float num1932 = Main.player[npc.target].Center.X - npc.Center.X;
-            if (Math.Abs(num1932) >= 300f && (Math.Abs(npc.velocity.X) < 6f || Math.Sign(npc.velocity.X) != npc.direction))
+            if (Math.Abs(num1932) >= 225f && (Math.Abs(npc.velocity.X) < 5f || Math.Sign(npc.velocity.X) != npc.direction))
             {
-                npc.velocity.X = npc.velocity.X + (float)npc.direction * 0.06f;
+                npc.velocity.X = npc.velocity.X + (float)npc.direction * 0.07f;
             }
             npc.rotation = npc.velocity.X * 0.025f;
             npc.spriteDirection = Math.Sign(npc.velocity.X);
@@ -62,7 +62,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
         {
 
             //Simple code for basic "next frame" animation
-            npc.frameCounter += 0.1F; //Frame "Speed"
+            npc.frameCounter += 0.2F; //Frame "Speed"
             npc.frameCounter %= Main.npcFrameCount[npc.type]; //Frame number
             int frame = (int)npc.frameCounter;
             npc.frame.Y = frame * frameHeight;
