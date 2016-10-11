@@ -22,7 +22,6 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Ranged
 			item.useStyle = 5;
 			item.noMelee = true;
 			item.knockBack = 5;
-			item.scale = 0.7f;
 			item.value = 50000;
 			item.rare = 7;
 			item.useSound = 11;
