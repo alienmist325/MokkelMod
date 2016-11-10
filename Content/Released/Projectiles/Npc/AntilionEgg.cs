@@ -18,7 +18,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			npc.name = "Antlion Egg";
 			npc.width = 36;
 			npc.height = 42;
-			npc.lifeMax = 500;
+			npc.lifeMax = 200;
 			npc.noGravity = false;
 			npc.damage = 0;
 			npc.defense = 20;
@@ -36,9 +36,26 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			npc.frame = new Rectangle(0,frameHeight*(frameNum-1),36,frameHeight);
 		}
 		
+		public int gtp(int X)
+		{
+			//get tile position
+			//is it x or y, bool X tells you
+			if(X == 0)
+			{
+				return (int)(npc.Center.X/16);
+			}
+			else
+			{
+				return (int)(npc.Center.Y/16);
+			}
+			
+		}
 		public override void AI()
 		{
-			
+			if (Main.tile[gtp(0),gtp(1)].active())
+			{
+				npc.timeLeft = 0;
+			}
 			timer++;
 			if(timer % 200 == 0)
 			{

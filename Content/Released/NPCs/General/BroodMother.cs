@@ -30,7 +30,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		Vector2 screenPos;
 		Texture2D brdMthr;
 		Rectangle drawnRegion;
-		SpriteEffects se;
+		SpriteEffects se; // left = none
 		
 		//locating rotated locations
 		float d; //distance
@@ -55,6 +55,8 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		bool canShoot = true;
 		bool up = true;
 		float vel = 5;
+		Vector2 toP = Vector2.Zero;
+		Vector2 toPlayer;
 		
 		public override void SetDefaults()
 		{
@@ -123,10 +125,20 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			}
 			else
 			{
-				npc.position = target;
-				npc.velocity = Vector2.Zero;
-				target = Main.player[NPI].Center;
-				phase = 2;
+				if(npc.position == target)
+				{
+					npc.position = target;
+					npc.velocity = Vector2.Zero;
+					target = Main.player[NPI].Center;
+					phase = 2;
+				}
+				else
+				{
+					toPlayer = target - npc.position;
+					toPlayer.Normalize();
+					npc.velocity = 8f * toPlayer;
+				}
+				
 			}
 
 			FindQuadrant(ref tqnt,ref trot, target - npc.Center);
@@ -142,12 +154,13 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		
 		public void Shoot()
 		{
+			toP = Main.player[NPI].Center + new Vector2(60*Main.player[NPI].velocity.X,0) + new Vector2(Main.rand.Next(-100,100),Main.rand.Next(-100,100));
 			if(timer[1] % 30 == 0 && canShoot)
 			{
 				Main.PlaySound(2,(int)npc.position.X, (int)npc.position.Y,65);
 				for(int i = 0; i < 1;i++)
 				{
-					Projectile.NewProjectile(pMth,FindVector(10f,Main.player[NPI].Center + Main.player[NPI].velocity + new Vector2(Main.rand.Next(-100*i,100*i),Main.rand.Next(-100*i,100*i)),false),mod.ProjectileType("SandSpit"),1,0f);
+					Projectile.NewProjectile(pMth,FindVector(10f,toP,false),mod.ProjectileType("SandSpit"),1,0f);
 				}
 				
 			}
@@ -347,6 +360,8 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			{
 				canShoot = true;
 			}
+			
+			//if(toP.X > 0 && se = S)
 		}
 		
 		public Vector2 FindVector(float speed, Vector2 center, bool move)
