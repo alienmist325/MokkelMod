@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MokkelMod.Content.Sprites.NPCs.General
 {
-	public class BroodMother : ModNPC
+	public class BroodMothers : ModNPC
 	{	
 		//general
 		int w = 260;
@@ -62,7 +62,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		{
 			npc.name = "Brood Mother";
 			npc.width = 260;
-			npc.height = 276 - 128 - 84;
+			npc.height = 64;//276 - 128 - 92
 			npc.lifeMax = 4000;
 			npc.noGravity = true;
 			npc.damage = 20;
@@ -74,7 +74,6 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			npc.boss = true;
 			npc.value = 100000f;
 			npc.knockBackResist = 0f;
-			Main.npcFrameCount[npc.type] = 2;
 		}
 		
 		public override void AI()
@@ -240,7 +239,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		public void AssignDrawVars()
 		{
 			screenPos = npc.position - Main.screenPosition;
-			screenPos -= new Vector2(0,128);
+			screenPos -= new Vector2(0,120);
 			screenPos += new Vector2(w/2,h/2);
 			brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMother");
 			drawnRegion = new Rectangle(0,frameNum*h,w,h);
@@ -347,7 +346,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			
 			spriteBatch.Draw(brdMthr,screenPos,drawnRegion,drawColor,rot,new Vector2(w/2,h/2),1f,se,0);
 			
-			return false;
+			return true;
 		}
 		
 		public void CanShoot()

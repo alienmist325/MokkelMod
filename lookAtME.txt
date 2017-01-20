@@ -1,0 +1,7 @@
+public override bool Autoload(ref string name, ref string texture, IList<EquipType> equips)
+        {
+            texture = DawnOfIndustry.ItemTexturePath + "MPickaxe";
+            return mod.Properties.Autoload;
+        }
+		
+public static string ItemTexturePath = "DawnOfIndustry/Textures/Items/";
