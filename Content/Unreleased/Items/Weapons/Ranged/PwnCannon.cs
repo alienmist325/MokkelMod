@@ -26,7 +26,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Ranged
 			item.shoot = 271;
 			item.noMelee = true;
 			item.shootSpeed = 15f;
-			item.useSound = 10;
+            item.UseSound = SoundID.Item10;
 			item.autoReuse = true;
 		}
 

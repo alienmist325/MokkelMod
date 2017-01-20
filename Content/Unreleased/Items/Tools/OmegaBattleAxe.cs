@@ -21,8 +21,8 @@ namespace MokkelMod.Content.Sprites.Items.Tools
 			item.knockBack = 9;
 			item.value = 60000;
 			item.rare = 4;
-			item.scale = 1.6f;
-			item.useSound = 1;
+            item.scale = 1.6f;
+            item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}
 	}

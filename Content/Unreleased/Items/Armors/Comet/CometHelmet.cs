@@ -28,10 +28,10 @@ namespace MokkelMod.Content.Sprites.Items.Armors.Comet
         {
             return body.type == mod.ItemType("CometSuit") && legs.type == mod.ItemType("CometGreaves");
         }
-		
-		 public override void ArmorSetShadows(Player Player, ref bool longTrail, ref bool smallPulse, ref bool largePulse, ref bool shortTrail)
+
+        public override void ArmorSetShadows(Player player)
         {
-            largePulse = true;
+            player.armorEffectDrawOutlines = true;
         }
 
         public override void UpdateArmorSet(Player Player)

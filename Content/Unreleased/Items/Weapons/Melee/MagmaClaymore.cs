@@ -22,7 +22,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.value = 200000;
 			item.rare = 7;
 			item.scale = 1.2f;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.shoot = mod.ProjectileType("MagmaClaymore");
 			item.shootSpeed = 10f;
 			item.autoReuse = true;

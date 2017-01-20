@@ -17,8 +17,8 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             npc.name = "Magma Serpent Head";
             npc.width = 44;
             npc.height = 78;
-			npc.soundHit = 2;
-			npc.soundKilled = 5;
+            npc.HitSound = SoundID.NPCHit2;
+            npc.DeathSound = SoundID.NPCDeath5;
             npc.damage = 200;
             npc.defense = 50;
             npc.lifeMax = 4000;

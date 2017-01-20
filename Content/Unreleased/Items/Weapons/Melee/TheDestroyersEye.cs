@@ -14,7 +14,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
             item.width = 24;
             item.height = 24;
             item.noUseGraphic = true;
-            item.useSound = 1;
+            item.UseSound = SoundID.Item1;
             item.melee = true;
             item.channel = true;
             item.noMelee = true;

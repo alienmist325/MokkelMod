@@ -22,7 +22,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.value = 10000;
 			item.shoot = mod.ProjectileType("MagmaFork");
 			item.rare = 7;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.shootSpeed = 3.7f;
 			item.autoReuse = true;
 		}

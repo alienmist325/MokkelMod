@@ -17,7 +17,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Ranged
 			item.shoot = mod.ProjectileType("RadicalBullet");
 			item.shootSpeed = 10f;
 			item.ranged = true;
-			item.useSound = 36;
+            item.UseSound = SoundID.Item36;
 			item.useTime = 50;
 			item.noMelee = true;
 			item.knockBack = 10f;

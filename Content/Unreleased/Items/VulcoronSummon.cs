@@ -21,7 +21,7 @@ namespace MokkelMod.Content.Sprites.Items
 			item.useAnimation = 45;
 			item.useTime = 45;
 			item.useStyle = 4;
-			item.useSound = 44;
+			item.UseSound = SoundID.Item44;
 			//item.consumable = true;
 		}
 

@@ -19,8 +19,8 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             npc.damage = 0;
             npc.defense = 100;
             npc.lifeMax = 1000;
-            npc.soundHit = 4;
-            npc.soundKilled = 22;
+            npc.HitSound = SoundID.NPCHit4;
+            npc.DeathSound = SoundID.NPCDeath22;
             npc.noGravity = true;
             npc.knockBackResist = 0f;
             Main.npcFrameCount[npc.type] = 3;

@@ -30,8 +30,8 @@ namespace MokkelMod.Content.Sprites.NPCs.Event.Comet
 			npc.defense = 20;
 			npc.knockBackResist = 0f;
 			npc.noTileCollide = true;
-			npc.soundHit = 3;
-			npc.soundKilled = 3;
+			npc.HitSound = SoundID.NPCHit3;
+			npc.DeathSound = SoundID.NPCDeath3;
 			npc.aiStyle = 44;
 		}
 		

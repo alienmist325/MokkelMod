@@ -25,7 +25,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Thrown
 			item.knockBack = 1;
 			item.value = 10000;
 			item.rare = 4;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.shoot = ProjectileID.Shuriken; 
 			item.shootSpeed = 16f;

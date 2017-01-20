@@ -20,7 +20,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Magic
 			item.useTime = 40;
 			item.useAnimation = 40;
 			item.knockBack = 1f;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.noMelee = true;
 			item.useStyle = 5;
 			item.value = 1;

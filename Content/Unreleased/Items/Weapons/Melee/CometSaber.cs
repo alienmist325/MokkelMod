@@ -23,7 +23,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.value = 100000;
 			item.rare = 6;
 			item.scale = 1.3f;
-			item.useSound = 7;
+            item.UseSound = SoundID.Item7;
 			item.autoReuse = true;
 		}
 

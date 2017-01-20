@@ -22,7 +22,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Ranged
 			item.knockBack = 1;
 			item.value = 60000;
 			item.rare = 4;
-			item.useSound = 5;
+            item.UseSound = SoundID.Item5;
 			item.autoReuse = true;
 			item.shoot = 1; //idk why but all the guns in the vanilla source have this
 			item.shootSpeed = 20f;

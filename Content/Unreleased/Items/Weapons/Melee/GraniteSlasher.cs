@@ -25,7 +25,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.rare = 3;
 			item.shoot = mod.ProjectileType("GraniteSlasher");
 			item.shootSpeed = 5f;
-			item.useSound = 1;
+			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;
 		}
 

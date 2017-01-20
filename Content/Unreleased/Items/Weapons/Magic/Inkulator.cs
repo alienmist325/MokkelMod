@@ -10,25 +10,25 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Magic
 	{
 		public override void SetDefaults()
 		{
-				item.mana = 7;
-				item.autoReuse = true;
-				item.name = "Inkulator";
-				item.useStyle = 5;
-				item.useAnimation = 18;
-				item.useTime = 6;
-				item.knockBack = 4f;
-				item.width = 38;
-				item.height = 10;
-				item.damage = 21;
-				item.shoot = 280;
-				item.shootSpeed = 10f;
-				item.useSound = 13;
-				item.rare = 4;
-				item.value = 500000;
-				item.toolTip = "Sprays out a shower of ichor";
-				item.magic = true;
-				item.noMelee = true;
-				item.shoot = mod.ProjectileType("InkulatorProjectile");
+			item.mana = 7;
+			item.autoReuse = true;
+			item.name = "Inkulator";
+			item.useStyle = 5;
+			item.useAnimation = 18;
+			item.useTime = 6;
+			item.knockBack = 4f;
+			item.width = 38;
+			item.height = 10;
+			item.damage = 21;
+			item.shoot = 280;
+			item.shootSpeed = 10f;
+            item.UseSound = SoundID.Item13;
+			item.rare = 4;
+			item.value = 500000;
+			item.toolTip = "Sprays out a shower of ichor";
+			item.magic = true;
+			item.noMelee = true;
+			item.shoot = mod.ProjectileType("InkulatorProjectile");
 		}
 		
 		public override void AddRecipes()

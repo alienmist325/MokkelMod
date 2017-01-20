@@ -22,7 +22,7 @@ public class FireworkTome : ModItem
 			item.useAnimation = 20; //How long the animation of the item takes
 			Item.staff[item.type] = true;
 			item.knockBack = 4f; //How much knockback the item produces
-			item.useSound = 73; //The soundeffect played when used 
+            item.UseSound = SoundID.Item73; //The soundeffect played when used 
 			item.noMelee = true; //Whether the weapon should do melee damage or not
 			item.useStyle = 5; //How the weapon is held, 5 is the gun hold style
 			item.value = 60000; //How much the item is worth

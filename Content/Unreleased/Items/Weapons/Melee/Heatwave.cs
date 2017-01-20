@@ -15,7 +15,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.height = 26;
 			item.toolTip = "It burns!";
 			item.noUseGraphic = true;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.melee = true;
 			item.channel = true;
 			item.noMelee = true;

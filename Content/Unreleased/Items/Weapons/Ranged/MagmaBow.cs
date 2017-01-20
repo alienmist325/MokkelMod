@@ -22,7 +22,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Ranged
 			item.knockBack = 1;
 			item.value = 10000;
 			item.rare = 7;
-			item.useSound = 5;
+            item.UseSound = SoundID.Item5;
 			item.autoReuse = true;
 			item.shoot = 1; 
 			item.shootSpeed = 13f;

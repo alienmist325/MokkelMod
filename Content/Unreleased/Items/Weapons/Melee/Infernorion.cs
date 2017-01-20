@@ -27,7 +27,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.noUseGraphic = true;
 			item.shoot = mod.ProjectileType("Infernorion");
 			item.shootSpeed = 10f;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}
 

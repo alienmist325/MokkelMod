@@ -21,7 +21,7 @@ namespace MokkelMod.Content.Sprites.Items.Tools
 			item.useStyle = 1;
 			item.value = 10000;
 			item.rare = 7;
-			item.useSound = 1;
+			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.useTurn = true;
 		}

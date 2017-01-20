@@ -26,7 +26,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Thrown
 			item.rare = 6;
 			item.shoot = mod.ProjectileType("JadeFan");
 			item.shootSpeed = 14f;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}
 

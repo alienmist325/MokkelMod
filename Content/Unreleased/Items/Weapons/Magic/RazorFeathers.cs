@@ -21,7 +21,7 @@ public class RazorFeathers : ModItem
 			item.useTime = 40; //How long it takes for the item to be used
 			item.useAnimation = 40; //How long the animation of the item takes
 			item.knockBack = 1f; //How much knockback the item produces
-			item.useSound = 1; //The soundeffect played when used 
+            item.UseSound = SoundID.Item1; //The soundeffect played when used 
 			item.noMelee = true; //Whether the weapon should do melee damage or not
 			item.useStyle = 5; //How the weapon is held, 5 is the gun hold style
 			item.value = 1; //How much the item is worth

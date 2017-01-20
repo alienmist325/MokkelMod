@@ -19,9 +19,9 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			npc.damage = 120;
 			npc.defense = 30;
 			npc.knockBackResist= 0f;
-			npc.noTileCollide = true;
-			npc.soundHit = 2;
-			npc.soundKilled = 5;
+            npc.noTileCollide = true;
+            npc.HitSound = SoundID.NPCHit2;
+            npc.DeathSound = SoundID.NPCDeath5;
 			npc.aiStyle = 10;
 		}
 		

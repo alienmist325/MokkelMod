@@ -30,9 +30,9 @@ namespace MokkelMod.Content.Sprites.Items.Armors.Empowered
             return body.type == mod.ItemType("EmpoweredBreastplate") && legs.type == mod.ItemType("EmpoweredGreaves");
         }
 
-        public override void ArmorSetShadows(Player Player, ref bool longTrail, ref bool smallPulse, ref bool largePulse, ref bool shortTrail)
+        public override void ArmorSetShadows(Player player)
         {
-            largePulse = true;
+            player.armorEffectDrawOutlines = true;
         }
 
         public override void UpdateArmorSet(Player Player)

@@ -24,7 +24,7 @@ namespace MokkelMod.Content.Sprites.Items.Weapons.Melee
 			item.rare = 8;
 			item.shoot = mod.ProjectileType("TrueRedDusk");
 			item.shootSpeed = 8f;
-			item.useSound = 1;
+            item.UseSound = SoundID.Item1;
 			item.autoReuse = false;
 		}
 		

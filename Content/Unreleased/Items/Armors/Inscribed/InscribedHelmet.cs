@@ -30,9 +30,9 @@ namespace MokkelMod.Content.Sprites.Items.Armors.Inscribed
             return body.type == mod.ItemType("InscribedBreastplate") && legs.type == mod.ItemType("InscribedGreaves");
         }
 
-        public override void ArmorSetShadows(Player Player, ref bool longTrail, ref bool smallPulse, ref bool largePulse, ref bool shortTrail)
+        public override void ArmorSetShadows(Player player)
         {
-            longTrail = true;
+            player.armorEffectDrawShadow = true;
         }
 
         public override void UpdateArmorSet(Player Player)
