@@ -411,16 +411,13 @@ namespace MokkelMod.Content.Unreleased.Worlds
 
         internal void GenerateDynastyPatch(int x, int y)
         {
-            for (int i = 0; i < 6; ++i)
-            {
-                int randX = Main.rand.Next(x - this.dynastyBiomeRadius, x + this.dynastyBiomeRadius + 1);
-                int randY = Main.rand.Next(y - this.dynastyBiomeRadius, y + this.dynastyBiomeRadius + 1);
+                int randX = Main.rand.Next(x - (this.dynastyBiomeRadius / 15), x + (this.dynastyBiomeRadius / 15) + 1);
+                int randY = Main.rand.Next(y - (this.dynastyBiomeRadius / 15), y + (this.dynastyBiomeRadius / 15) + 1);
 
-                this.RoundHole(randX, randY, (int)(Main.rand.NextFloat() * 3), (int)(Main.rand.NextFloat() * 3), 40, false);
-            }
+                this.RoundHole(randX, randY, (int)(Main.rand.NextFloat() * 80), (int)(Main.rand.NextFloat() * 20), 20, true, true);
         }
 
-        internal void RoundHole(int X, int Y, int Xmult, int Ymult, int strength, bool initialdig)
+        internal void RoundHole(int X, int Y, int Xmult, int Ymult, int strength, bool initialdig, bool grassy = false)
         {
             if (initialdig)
                 WorldGen.digTunnel(X, Y, 0, 0, strength, strength, false);
@@ -432,88 +429,97 @@ namespace MokkelMod.Content.Unreleased.Worlds
 
                 WorldGen.digTunnel(X + DistX, Y + DistY, 0, 0, strength, strength, false);
             }
+            for (int rotation3 = 0; rotation3 < 350; rotation3++)
+            {
+                int Dist2X = (int)(0 - (Math.Sin(rotation3) * Xmult));
+                int Dist2Y = (int)(0 - (Math.Cos(rotation3) * Ymult));
+                if (grassy && Math.Cos(rotation3) < -0.1f)
+                {
+                    WorldMethods.TileRunner(X + (Dist2X * 2), Y + (Dist2Y * 3) + Ymult, (strength / 2), 1, 2, true, 0f, 0f, true, true); //placeholder
+
+                }
+
+
+            }
         }
 
         // A LOT OF THE FOLLOWING METHOD CODE NEEDS TO BE REWORKED.
         // BUILDINGS ARE SPAWNING QUIRKY.
         internal void GenerateStructures(int x, int y)
         {
-            int numberToGenerate = WorldGen.genRand.Next(3, 6);
+            int numberToGenerate = WorldGen.genRand.Next(6, 9);
             for (int k = 0; k < numberToGenerate; ++k)
             {
-                int attempts = 0;
-                while (attempts < 10)
-                {
                     DynastyStructure dynastyStructure = new DynastyStructure(mod, Main.rand.Next(1, 3));
 
                     int worldHeight = Main.maxTilesY;
                     int worldWidth = Main.maxTilesX;
-
-                    int a = x + Main.rand.Next(-100, 100);
-                    int b = y + Main.rand.Next(-100, 100);
-
-                    if (Main.tile[a, b].active())
+                    bool alreadydone = false;
+                    int a = x + Main.rand.Next(-60, 60);
+                   // int b = y + Main.rand.Next(0, 40);
+                    for (int b = y; b < y + 120 || alreadydone == true; b++)
                     {
-                        bool placementOK = true;
-
-                        for (int i = 0; i <= 40; i++)
+                        if (Main.tile[a, b].active())
                         {
-                            for (int j = 0; j <= 40; j++)
+                            bool placementOK = true;
+
+                            for (int i = 0; i <= 40; i++)
                             {
-                                int c = x + i;
-                                int d = y + j;
-                                while (c > worldWidth)
-                                    c--;
-                                while (d > worldHeight)
-                                    d--;
-                                int type = (int)Main.tile[c, d].type;
-                                if (Main.tile[c, d].active())
+                                for (int j = 0; j <= 40; j++)
                                 {
-                                    if (type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick || type == TileID.Cloud || type == TileID.RainCloud || type == TileID.DynastyWood)
+                                    int c = x + i;
+                                    int d = y + j;
+                                    while (c > worldWidth)
+                                        c--;
+                                    while (d > worldHeight)
+                                        d--;
+                                    int type = (int)Main.tile[c, d].type;
+                                    if (Main.tile[c, d].active())
                                     {
-                                        placementOK = false;
-                                        break;
+                                        if (type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick || type == TileID.Cloud || type == TileID.RainCloud || type == TileID.DynastyWood)
+                                        {
+                                            placementOK = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!placementOK)
+                                    break;
+                            }
+
+                            for (int i = 0; i >= -40; i--)
+                            {
+                                if (!placementOK)
+                                    break;
+
+                                for (int j = 0; j >= -40; j--)
+                                {
+                                    int c = x + i;
+                                    int d = y + j;
+                                    while (a < 0)
+                                        a++;
+                                    while (b < 0)
+                                        b++;
+                                    int type = (int)Main.tile[c, d].type;
+                                    if (Main.tile[c, d].active())
+                                    {
+                                        if (type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick || type == TileID.Cloud || type == TileID.RainCloud || type == TileID.DynastyWood)
+                                        {
+                                            placementOK = false;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                            if (!placementOK)
-                                break;
-                        }
 
-                        for (int i = 0; i >= -40; i--)
-                        {
-                            if (!placementOK)
-                                break;
-
-                            for (int j = 0; j >= -40; j--)
+                            if (placementOK)
                             {
-                                int c = x + i;
-                                int d = y + j;
-                                while (a < 0)
-                                    a++;
-                                while (b < 0)
-                                    b++;
-                                int type = (int)Main.tile[c, d].type;
-                                if (Main.tile[c, d].active())
-                                {
-                                    if (type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick || type == TileID.Cloud || type == TileID.RainCloud || type == TileID.DynastyWood)
-                                    {
-                                        placementOK = false;
-                                        break;
-                                    }
-                                }
+                                dynastyStructure.Generate(a, b);
+                                break;
+                                alreadydone = true;
                             }
                         }
-
-                        if (placementOK)
-                        {
-                            dynastyStructure.Generate(a, b);
-                            break;
-                        }
-                        else
-                            attempts++;
                     }
-                }
             }
         }
     }
@@ -727,8 +733,8 @@ namespace MokkelMod.Content.Unreleased.Worlds
             {
                 for (int j = 0; j < dynastyStructureTiles.GetLength(1); j++)
                 {
-                    int k = x + j;
-                    int l = y + i;
+                    int k = (x + j) - dynastyStructureTiles.GetLength(1);
+                    int l = (y + i) - dynastyStructureTiles.GetLength(0); 
                     if (WorldGen.InWorld(k, l, 40))
                     {
                         Tile tile = Framing.GetTileSafely(k, l);
@@ -740,6 +746,8 @@ namespace MokkelMod.Content.Unreleased.Worlds
                         // If the spot should be empty: empty it, before actual generation begins.
                         if (dynastyStructureTiles[i, j] == 0)
                             tile.active(false);
+                        tile.liquid = 0;
+                        tile.lava(false);
                     }
                 }
             }
@@ -749,8 +757,8 @@ namespace MokkelMod.Content.Unreleased.Worlds
             {
                 for (int j = 0; j < dynastyStructureTiles.GetLength(1); j++)
                 {
-                    int k = x + j;
-                    int l = y + i;
+                    int k = (x + j) - dynastyStructureTiles.GetLength(1);
+                    int l = (y + i) - dynastyStructureTiles.GetLength(0);
                     if (WorldGen.InWorld(k, l, 40))
                     {
                         Tile tile = Framing.GetTileSafely(k, l);
