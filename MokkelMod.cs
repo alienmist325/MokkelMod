@@ -18,7 +18,8 @@ namespace MokkelMod
 			{
 				Autoload = true,
 				AutoloadGores = true,
-				AutoloadSounds = true
+				AutoloadSounds = true,
+				AutoloadBackgrounds = true
 			};
 		}
 
