@@ -29,6 +29,22 @@ public class Helper
 	public SpriteEffects se; // left = none
 	public int frameNum = 0;
 	
+    public void log(string a,string b)
+    {
+        ErrorLogger.Log(a);
+        ErrorLogger.Log(brdMthr.ToString());
+        ErrorLogger.Log(screenPos.ToString());
+        ErrorLogger.Log(drawnRegion.ToString());
+        ErrorLogger.Log(b);
+    }
+
+    public float away(Vector2 a,Vector2 b)
+    {
+        Vector2 c;
+        c = Vector2.Subtract(a, b);
+        return c.Length();
+    }
+
 	public float r(int deg)
 	{
 		//degrees to radians
