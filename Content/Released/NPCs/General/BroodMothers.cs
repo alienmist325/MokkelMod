@@ -26,7 +26,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		byte frameNum;
 		
 		//Draw sprite
-		float rot;
+		float rot = 0;
 		Vector2 screenPos;
 		Texture2D brdMthr;
 		Rectangle drawnRegion;

@@ -1,12 +1,12 @@
 using System;
-
-using Microsoft.Xna.Framework;
-
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using MokkelMod.Content.Unreleased.Worlds;
+using MokkelMod;
 
 namespace MokkelMod
 {
@@ -28,15 +28,20 @@ namespace MokkelMod
             if (text.StartsWith("/"))
             {
                 broadcast = false;
-
+                Player player = Main.LocalPlayer;
                 text = text.Substring(1);
                 if (text.ToLower() == "teleporttodynasty")
                 {
-                    Player player = Main.LocalPlayer;
+                   
                     player.Teleport(new Vector2(
                         this.GetModWorld<MokkelWorld>().dynastyBiome.dynastyX,
                         this.GetModWorld<MokkelWorld>().dynastyBiome.dynastyY));                    
                 }
+                if (text.ToLower() == "togtime")
+                {
+                    Main.dayTime = Main.dayTime ? false : true;
+                }
+
             }
         }
 	}

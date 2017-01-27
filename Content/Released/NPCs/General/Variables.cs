@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class Helper
 {
 	//FindNPI
-	public byte NPI;//nearest player index
+	public byte NPI = 0;//nearest player index
 	public float curDist = 0;
 	public float minDist = 0;
 	public Vector2 curVect;
@@ -22,7 +22,7 @@ public class Helper
 	public Vector2 pEgg;
 	
 	//Draw sprite
-	public float rot;
+	public float rot = 0f;
 	public Vector2 screenPos;
 	public Texture2D brdMthr;
 	public Rectangle drawnRegion;
@@ -31,12 +31,21 @@ public class Helper
 	
     public void log(string a,string b)
     {
-        ErrorLogger.Log(a);
-        ErrorLogger.Log(brdMthr.ToString());
-        ErrorLogger.Log(screenPos.ToString());
-        ErrorLogger.Log(drawnRegion.ToString());
-        ErrorLogger.Log(b);
+        try
+        {
+            ErrorLogger.Log(a);
+           // ErrorLogger.Log(brdMthr.ToString());
+           // ErrorLogger.Log(screenPos.ToString());
+           // ErrorLogger.Log(drawnRegion.ToString());
+            ErrorLogger.Log(b);
+        }
+        catch(Exception e)
+        {
+            ErrorLogger.Log(e.ToString());
+        }
     }
+
+
 
     public float away(Vector2 a,Vector2 b)
     {
@@ -45,11 +54,17 @@ public class Helper
         return c.Length();
     }
 
-	public float r(int deg)
+	public float r(float deg)
 	{
 		//degrees to radians
 		return (float)MathHelper.ToRadians(deg);
 	}
+
+    public float d(float rad)
+    {
+        //radians to degrees
+        return (float)MathHelper.ToDegrees(rad);
+    }
 	
 	public bool inq(float n,int l,int h)
 	{

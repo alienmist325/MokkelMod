@@ -27,15 +27,15 @@ namespace MokkelMod.Content.Sprites.Items
 
 		public override bool UseItem(Player player)
 		{
-			if(Main.dayTime)
+			/*if(Main.dayTime)
 			{
 				Main.dayTime = false;
 			}
 			else
 			{
 				Main.dayTime = true;
-			}
-			//NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("Vulcoron"));
+			}*/
+			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("BroodMother"));
 			Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
 			return true;
 		}

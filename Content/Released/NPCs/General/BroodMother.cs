@@ -22,7 +22,19 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		float rad;
 		float deg;
 		Vector2 dist;
-		public override void SetDefaults()
+
+        Helper h = new Helper();
+
+        bool ft = true;
+
+        //test
+        public byte NPI = 0;//nearest player index
+        public float curDist = 0;
+        public float minDist = 0;
+        public Vector2 curVect;
+        public Vector2 minVect;//vector between npi and npc
+
+        public override void SetDefaults()
 		{
 			npc.name = "Brood Mother";
 			npc.width = 260; //hitbox
@@ -38,47 +50,79 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			npc.value = 100000f;
 			npc.knockBackResist = 0f;
 		}
-		
-		public void FindNPI()
+
+        public override void AI()
+        {
+
+            //teleport broodmother to player on spawn
+            npc.position = !ft ? npc.position : Main.LocalPlayer.position - new Vector2(0, 200);
+            h.pMth = !ft ? h.pMth : Vector2.Zero;
+            ft = false;
+            try
+            {
+                FindNPI();
+            }
+            catch(Exception e)
+            {
+                ErrorLogger.Log("FINDNPI: " + e.ToString());
+            }
+            ErrorLogger.Log("It works?");
+            //print values
+            //Main.NewText("Dist away: " + h.away(Main.player[Main.myPlayer].position, npc.position).ToString());
+            Main.NewText("Rotation: " + h.d(h.rot).ToString());
+
+            try
+            {
+                Projectile.NewProjectile(h.pMth, Vector2.Zero, mod.ProjectileType("TestPos"), 0, 0f);
+            }
+            catch(Exception e)
+            {
+                ErrorLogger.Log("Projectile Error: " + e.ToString());
+            }
+
+        }
+
+        public void FindNPI()
 		{
-			Helper h = new Helper();
-			for(byte i = 0; i < 255; i++)
-			{
-				if (Main.player[i].active)
-				{
-					h.minDist = 0;
-					h.curVect = Main.player[i].Center - npc.Center;
-					h.curDist = h.curVect.Length(); //distance between npc and player
-					
-					if (h.curDist < h.minDist||h.minDist == 0)
-					{
-						h.NPI = i;
-						h.minDist = h.curDist;
-						h.minVect = h.curVect;
-					}
-				}
-				else
-				{
-					i = 255; //break from cycle because all proceeding positions will be null.
-				}
-			}
-		}
+            ErrorLogger.Log("1");
+            try
+            {
+                for (byte i = 0; i < 255; i++)
+                {
+                    if (Main.player[i].active)
+                    {
+                        ErrorLogger.Log("2");
+                        curVect = Main.player[i].Center - npc.Center;
+                        curDist = curVect.Length(); //distance between npc and player
+
+                        if (curDist < minDist || minDist == 0)
+                        {
+                            NPI = i;
+                            minDist = curDist;
+                            minVect = curVect;
+                        }
+                        ErrorLogger.Log("3");
+                    }
+                    else
+                    {
+                        ErrorLogger.Log("4");
+                        i = 255; //break from cycle because all proceeding positions will be null.
+                    }
+                }
+                ErrorLogger.Log("5");
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Log("FINDNPI: " + e.ToString());
+            }
+            ErrorLogger.Log("6");
+        }
 		
-		public override void AI()
-		{
-			Helper h = new Helper();
-            Main.NewText(h.away(Main.player[Main.myPlayer].position, npc.position).ToString());
-			dist = Main.player[h.NPI].Center - npc.Center;
-			rad = (float)Math.Atan2(dist.X,dist.Y);
-			deg = (float)((180 * rad)/Math.PI);
-			Main.NewText(deg.ToString());
-			Projectile.NewProjectile(h.pMth,Vector2.Zero,mod.ProjectileType("Fireball"),0,0f);
-		}
+		
 		
 		public void FindQuadrant(ref int q, ref float rad,Vector2 v)
 		{
 			// q is quadrant, r is rotation, v is vector
-			Helper h = new Helper();
 			rad = (float)Math.Atan2(v.Y,v.X);
 			float r = rad + 3.14f; 
 			q = h.inq(r,0,90) ? 1 : q;
@@ -93,28 +137,21 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			Vector2 v = new Vector2(x,y);
 			float d = (float)v.Length();
 			float a = (float)Math.Atan2(v.Y,v.X);
-			Main.NewText("hi");
 			a += (h.rot - h.r(90));
-			
 			h.rv.Y = (float)Math.Sin(a)*d;
 			h.rv.X = (float)Math.Cos(a)*d;
-			Main.NewText("hi");
 			newPos = npc.Center + h.rv; 
-			Main.NewText("hsi");
 		}
 		
 		public void AssignDrawVars()
 		{
-			Main.NewText("ADV");
-			Helper h = new Helper();
 			h.screenPos = npc.position - Main.screenPosition;
 			h.screenPos -= new Vector2(0,120);
 			h.screenPos += new Vector2(wi/2,he/2);
 			h.brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMother");
 			h.drawnRegion = new Rectangle(0,h.frameNum*he,wi,he);
 			FindQuadrant(ref h.qnt,ref h.rot,h.minVect);
-            // h.log("[DAA START", "DAA END]");
-            try { h.log(Main.npcTexture[mod.NPCType("BroodMother")].ToString(), "END]"); }catch(Exception e) { ErrorLogger.Log(e.ToString()); }
+            h.se = SpriteEffects.None;
         }
 		
 		public void pos(Vector2 np)
@@ -124,33 +161,25 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Helper h = new Helper();
-			if (!Main.gamePaused)
-			{
-				//Counter();
-				AssignDrawVars();
-                try { h.log("[srsly START", "srsly END]"); } catch (Exception e) { ErrorLogger.Log(e.ToString()); }
+            if (!Main.gamePaused)
+            {
+                //Counter();
+                AssignDrawVars();
                 //CanShoot();
                 // to make it 0 - 360, rather than 0 - 180 then 0 - -180 (find quadrant)
                 //RestrictRot();
-                FindRotPnt(-120,34,ref h.pMth); //find mouth
-                try { h.log("[1 START", "1 END]"); }catch(Exception e) { ErrorLogger.Log(e.ToString()); }
-                FindRotPnt(-51,34,ref h.pEgg);
-                h.log("[2 START", "2 END]");
+                FindRotPnt(-120, 34, ref h.pMth); //find mouth
+                FindRotPnt(-51, 34, ref h.pEgg);
                 //AdjustRot();
+            }
 
-            }
-            if (h.brdMthr != mod.GetTexture("Content/Sprites/NPCs/General/BroodMother"))
+            try
             {
-                h.brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMother");
-            }
-            h.log("[DBD START", "DBD END]");
-            try {
-                spriteBatch.Draw(Main.npcTexture[mod.NPCType("BroodMother")]/**h.brdMthr**/, h.screenPos, h.drawnRegion, drawColor, h.rot, new Vector2(wi / 2, he / 2), 1f, h.se, 0);
+                h.log("Deg: " + h.d(h.rot).ToString(), "Rad " + h.rot.ToString());
+                spriteBatch.Draw(h.brdMthr, h.screenPos, h.drawnRegion, drawColor, h.rot, new Vector2(wi / 2, he / 2), 1f, h.se, 0);
             }
             catch(Exception e)
             {
-                ErrorLogger.ClearLog();
                 ErrorLogger.Log(e.ToString());
             }
 			
