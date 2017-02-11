@@ -23,6 +23,7 @@ namespace MokkelMod.Content.Sprites.Projectiles.Npc
 			projectile.light = 2f;
 			projectile.tileCollide = true;
 			projectile.damage = 0;
+            projectile.knockBack = 0;
 			Main.projFrames[projectile.type] = 8;
 		}
 		
@@ -32,38 +33,7 @@ namespace MokkelMod.Content.Sprites.Projectiles.Npc
 			projectile.timeLeft += 10;
 			projectile.rotation = (float)Math.Atan2(projectile.velocity.Y,projectile.velocity.X);
 			projectile.frameCounter++;
-			if (projectile.frameCounter == 1)
-			{
-				projectile.frame = 0;
-			}
-			if (projectile.frameCounter == 2)
-			{
-				projectile.frame = 1;
-			}
-			if (projectile.frameCounter == 3)
-			{
-				projectile.frame = 2;
-			}
-			if (projectile.frameCounter == 4)
-			{
-				projectile.frame = 3;
-			}
-			if (projectile.frameCounter == 5)
-			{
-				projectile.frame = 4;
-			}
-			if (projectile.frameCounter == 6)
-			{
-				projectile.frame = 5;
-			}
-			if (projectile.frameCounter == 7)
-			{
-				projectile.frame = 6;
-			}
-			if (projectile.frameCounter == 8)
-			{
-				projectile.frame = 7;
-			}
+            projectile.frame = projectile.frameCounter - 1;
 			if (projectile.frameCounter == 9)
 			{
 				projectile.frameCounter = 0;
