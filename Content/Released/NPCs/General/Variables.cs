@@ -35,12 +35,15 @@ public class Helper
     public int[] timer = new int[4];
 
     //phase 1
-    public bool LHS = true;//whether it is on the left hand side or not
-    public int hoverPos = 25;
+    public bool RHS = true;//whether it is on the right hand side or not
     public int rand = 100;
     public int interval = 1;
+    public float vel = 5;
+    public bool turbo = false;
+    public bool slow = true;
+    public Vector2 oldTarg = Vector2.Zero;
 
-    public void rec(string a, ref float r)
+    public void rec(string a, ref float r, Vector2 pv)
     {
         Main.NewText(a +
             " Deg: " + ((int)d(rot)).ToString() +
@@ -50,7 +53,7 @@ public class Helper
             " Q: " + qnt.ToString() +
             " Mouth: " + pMth.ToString() +
             " Egg: " + pEgg.ToString() +
-            " distAway: " + hoverPos.ToString() +
+            " playerVel: " + slow.ToString() + " " + pv.X.ToString() +  
             " box: " + rand.ToString()
             );
 
@@ -165,5 +168,29 @@ public class Helper
     {
         dif[no] *= (f == max || f == min) ? -1 : 1;
         f += dif[no];
+    }
+
+    public Vector2 Turbo(Vector2 pv)
+    {
+        Main.NewText((slow).ToString());
+        if (turbo)
+        {
+            if (pv.X > vel/2)
+            {
+                vel += 0.01f;
+                
+            }
+        }
+        else
+        {
+            if (pv.X < 4 && vel > 5)
+            {
+                vel -= 0.1f;
+                
+
+            }
+        }
+        return pv.X > 4 ? pv * 30 : Vector2.Zero;
+
     }
 }

@@ -22,6 +22,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
         Helper h = new Helper();
         bool ft = true;
         Vector2 toP;
+        Vector2 nv;
 
         public override void SetDefaults()
 		{
@@ -42,7 +43,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
         public override void AI()
         {
-
+            h.slow = true;
             //teleport broodmother to player on spawn
             npc.position = !ft ? npc.position : Main.LocalPlayer.position - new Vector2(0, 200);
             ft = false;
@@ -56,40 +57,38 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                 //move to one side of the player
                 ShootMove();
             }
-            Hover();
+            //Hover();
         }
 
         public void ShootMove()
         {
             Vector2 target;
-            
-            target = Main.player[h.NPI].Center + new Vector2(400 * h.LHS.ToInt(), -200);
-            MoveTo(target,5);
+            if (!(Main.player[h.NPI].Center.Length() - h.oldTarg.Length() < h.vel && ( h.RHS && h.oldTarg.X > Main.player[h.NPI].Center.X)))
+            {
+                h.oldTarg = Main.player[h.NPI].Center;  
+            }
+            target = h.oldTarg + new Vector2(400 * h.RHS.ToInt(), -200) + h.Turbo(Main.player[h.NPI].velocity);
+            MoveTo(target, h.vel);    
         }
 
-        public void MoveTo(Vector2 target, int speed)
+        
+
+        public void MoveTo(Vector2 target, float speed)
         {
-            npc.velocity = target - npc.Center;
-            Main.NewText(npc.velocity.ToString());
-            if(npc.velocity.Length() < 7.1f)
+            Projectile.NewProjectile(target, Vector2.Zero, mod.ProjectileType("TestPos"), 0, 0f);
+            nv = target - npc.Center;
+            Main.NewText(nv.ToString());
+            if (nv.Length() < Math.Sqrt(2 * Math.Pow(h.vel, 2)) + 0.1f)
             {
-                npc.velocity = Vector2.Zero;
+                //npc.velocity = Vector2.Zero;
+                nv /= 2;
             }
             else
             {
-                npc.velocity.Normalize();
-                npc.velocity *= speed;
+                nv.Normalize();
+                nv *= speed;
             }
-        }
-
-        public void Hover()
-        {
-            Vector2 hov;
-            h.Fluc(ref h.hoverPos, 25, -25, 0);
-            hov = new Vector2(0, h.hoverPos);
-            hov.Normalize();
-            hov *= 2;
-            npc.velocity += hov;
+            npc.velocity = nv;
         }
 
         public void Shoot()
@@ -98,6 +97,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
             if (h.canShoot(toP))
             {
+                h.turbo = false;
                 toP.Normalize();
                 toP *= 10;
                 if (h.timer[1] % 30 == 0)
@@ -110,6 +110,10 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                     }
                     Projectile.NewProjectile(h.pMth, toP, mod.ProjectileType("SandSpit"), 1, 0f);
                 }
+            }
+            else
+            {
+                h.turbo = true;
             }
             
         }
@@ -142,7 +146,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			// q is quadrant, r is rotation, v is vector
 			rad = (float)Math.Atan2(v.Y,v.X); 
             h.real = rad + 3.14f;
-            h.rec("FQ", ref h.real);
+            h.rec("FQ", ref h.real, Main.player[h.NPI].velocity);
             q = h.inq(h.real,0,90) ? 1 : q;
 			q = h.inq(h.real,90,180) ? 2 : q;
             q = h.inq(h.real,180,270) ? 3 : q;

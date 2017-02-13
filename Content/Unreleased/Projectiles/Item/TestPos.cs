@@ -14,7 +14,7 @@ namespace MokkelMod.Content.Sprites.Projectiles.Item
 			projectile.name = "TestPos";
 			projectile.width = 16;
 			projectile.height = 16;
-			projectile.timeLeft = 10;
+			projectile.timeLeft = 2;
 			projectile.penetrate = -1;
 			projectile.ignoreWater = true;
 			projectile.friendly = true;
