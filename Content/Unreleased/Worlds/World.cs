@@ -17,7 +17,30 @@ namespace MokkelMod.Content.Unreleased.Worlds
 		int angle;
 		int spawnX;
 		int spawnY;
-		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+        int exists;
+
+        public override void PreUpdate()
+        {
+            ErrorLogger.Log(Main.npc[exists].active.ToString());
+            Main.npc[exists].position = Main.player[Main.myPlayer].position;
+            foreach (NPC n in Main.npc)
+            {
+                if (n.name == "Brood Mother")
+                {
+                    exists = 
+                    n.whoAmI;
+                }
+            }
+            if(exists > 0)
+            {
+                 Main.NewText("t" + exists.ToString());
+            }
+            else
+            {
+                Main.NewText("f");
+            }
+        }
+        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
 		{
 			///a
 			int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));

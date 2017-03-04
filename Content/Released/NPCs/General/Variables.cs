@@ -31,17 +31,22 @@ public class Helper
 	public int frameNum = 0;
 
     //phases
-    public int phase = 1;
-    public int[] timer = new int[4];
+    public int phase = 0;
+    public int[] timer = new int[2]; //new int[max timers] misc
+    public byte[] pTimer = new byte[2]; //new byte[max phases] phases
 
-    //phase 1
-    public bool RHS = true;//whether it is on the right hand side or not
+    //phase 0
+    public int RHS = 1;//whether it is on the right hand side or not
     public int rand = 100;
-    public int interval = 1;
     public float vel = 5;
     public bool turbo = false;
-    public bool slow = true;
     public Vector2 oldTarg = Vector2.Zero;
+
+    public Vector2 upv = Vector2.Zero; //used player velocity
+    public int maxi;
+
+    //phase 1
+    public Vector2 swpPnt;
 
     public void rec(string a, ref float r, Vector2 pv)
     {
@@ -53,12 +58,13 @@ public class Helper
             " Q: " + qnt.ToString() +
             " Mouth: " + pMth.ToString() +
             " Egg: " + pEgg.ToString() +
-            " playerVel: " + slow.ToString() + " " + pv.X.ToString() +  
-            " box: " + rand.ToString()
+            " playerVel: " + pv.X.ToString() +
+            " broodVel: " + vel.ToString() +
+            " box: " + rand.ToString() +
+            " turbo: " + turbo.ToString() +
+            " phase: " + phase.ToString()
             );
-
         
-            
     }
 
     public void FindNPI(NPC npc)
@@ -137,7 +143,10 @@ public class Helper
     
     public void Timer()
     {
-        timer[0]++;
+        //0 controls wing flapping
+        //1 controls
+        //timer
+        timer[0]++; 
         switch(timer[0])
         {
             case 5:
@@ -148,8 +157,19 @@ public class Helper
                 timer[0] = 0;
                 break;
         }
-        timer[1] += phase == 1 ? 1 : 0;
+        if (phase == 0)
+        {
+            timer[1] += timer[1] < maxi ? 1 : -1;
+            timer[1] = timer[1] == maxi ? 0 : timer[1];
+        }
+        
+        for (byte i = 1; i < 2; i++)
+        {
+            pTimer[i] += (byte)(phase == i ? 1 : 0);
+        }
+
         //phase = timer[1] == 300 ? 2 : phase;
+        
     }
 
     public bool canShoot(Vector2 vecFrom)
@@ -172,25 +192,32 @@ public class Helper
 
     public Vector2 Turbo(Vector2 pv)
     {
-        Main.NewText((slow).ToString());
         if (turbo)
         {
-            if (pv.X > vel/2)
-            {
-                vel += 0.01f;
-                
-            }
+            //if it faster than half your speed, and it can't see you, speed up
+            vel += Math.Abs(pv.X) > Math.Abs(vel / 2) ? 0.01f : 0f;
         }
         else
         {
-            if (pv.X < 4 && vel > 5)
-            {
-                vel -= 0.1f;
-                
-
-            }
+            //if your targ speed is very high (>5) and the player has slowed down (<4), slow down
+            vel -= Math.Abs(pv.X) < 4 && Math.Abs(vel) > 5 ? 0.1f : 0f;
         }
-        return pv.X > 4 ? pv * 30 : Vector2.Zero;
+        maxi = (int)(Math.Abs(pv.X) *10); //maxi decides how big timer[1] must be to update (i.e. set to 0)
+        upv = timer[1] == 0 ? pv : upv; //every 2 ticks update playerVel
+        return Math.Abs(pv.X) > 4 ? upv * 30 : Vector2.Zero; // no extra dist if player is slow
+    }
 
+    public void testPos(Vector2 pos)
+    {
+        Projectile.NewProjectile(pos, Vector2.Zero, 736, 0, 0f);
+    }
+
+    public float swoopFormula(Vector2 pos,float x)//pos is useless half the time..
+    {
+        if (pTimer[1] == 0)
+        {
+            swpPnt = pos;
+        }
+        return (float)(0.03 * Math.Pow(x - swpPnt.X, 2) + swpPnt.Y);
     }
 }

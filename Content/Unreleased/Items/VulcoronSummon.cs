@@ -5,12 +5,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace MokkelMod.Content.Sprites.Items
 {
 
 	public class VulcoronSummon : ModItem
 	{
+        bool exists;
+        int num;
 		public override void SetDefaults()
 		{
 			item.name = "Summon the demise";
@@ -27,7 +30,7 @@ namespace MokkelMod.Content.Sprites.Items
 
 		public override bool UseItem(Player player)
 		{
-			/*if(Main.dayTime)
+            /*if(Main.dayTime)
 			{
 				Main.dayTime = false;
 			}
@@ -35,8 +38,26 @@ namespace MokkelMod.Content.Sprites.Items
 			{
 				Main.dayTime = true;
 			}*/
-			NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("BroodMother"));
-			Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+            exists = false;
+            foreach (NPC n in Main.npc)
+            {
+                if (n.name == "Brood Mother")
+
+                {
+                    exists = true;
+                    num = n.whoAmI;
+                }
+            }
+            if (!exists)
+            {
+                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("BroodMother"));
+                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+            }
+            else
+            {
+                Main.npc[num].ai[1] = 1;
+            }
+			
 			return true;
 		}
 
