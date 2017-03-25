@@ -11,6 +11,8 @@ namespace MokkelMod.Content.Unreleased.Players
 {
     public class PlayerX : ModPlayer
     {
+        public bool locked = false;
+
         public bool empowered;
         public bool inscribed;
         public bool enraged;
@@ -18,6 +20,19 @@ namespace MokkelMod.Content.Unreleased.Players
         public int armorSetStacks;
         public int armorSetStacksCooldown;
 
+        public override void PreUpdate()
+        {
+            if (locked)
+            {
+                foreach (Projectile p in Main.projectile)
+                {
+                    if (p.name == "TestPos")
+                    {
+                        p.ai[0] = 1;
+                    }
+                }
+            }
+        }
         public override void ResetEffects()
         {
             this.empowered = false;

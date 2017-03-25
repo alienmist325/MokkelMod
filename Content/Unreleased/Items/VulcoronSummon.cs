@@ -41,7 +41,7 @@ namespace MokkelMod.Content.Sprites.Items
             exists = false;
             foreach (NPC n in Main.npc)
             {
-                if (n.name == "Brood Mother")
+                if (n.name == "Brood Mother" && n.active)
 
                 {
                     exists = true;

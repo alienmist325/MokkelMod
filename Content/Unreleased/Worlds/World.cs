@@ -21,7 +21,7 @@ namespace MokkelMod.Content.Unreleased.Worlds
 
         public override void PreUpdate()
         {
-            ErrorLogger.Log(Main.npc[exists].active.ToString());
+           /** exists = 0;
             Main.npc[exists].position = Main.player[Main.myPlayer].position;
             foreach (NPC n in Main.npc)
             {
@@ -33,12 +33,14 @@ namespace MokkelMod.Content.Unreleased.Worlds
             }
             if(exists > 0)
             {
-                 Main.NewText("t" + exists.ToString());
+                 Main.NewText("Health: " + Main.npc[exists].life.ToString() + " Name: " + Main.npc[exists].name.ToString() + " ? " + Main.npc[exists].active.ToString());
+                ErrorLogger.Log(Main.npc[exists].life.ToString());
+
             }
             else
             {
                 Main.NewText("f");
-            }
+            }**/
         }
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
 		{

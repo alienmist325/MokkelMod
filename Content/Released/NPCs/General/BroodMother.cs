@@ -44,7 +44,6 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
         public override void AI()
         {
-            ErrorLogger.Log(npc.whoAmI.ToString());
             //allow for toggling of side
             h.RHS *= npc.ai[1] == 1 ? -1 : 1;
             npc.ai[1] = 0;
@@ -53,10 +52,12 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             npc.ai[0] = ft ? -1 : npc.ai[0];
             ft = false;
 
-            h.phase = npc.ai[0] != -1 ? (int)npc.ai[0] : h.phase;
-            h.pTimer[h.phase] = 0;
-            npc.ai[0] = -1;
-
+            if(npc.ai[0] != -1)
+            {
+                h.phase = (int)npc.ai[0];
+                h.pTimer[h.phase] = 0;
+                npc.ai[0] = -1;
+            }
 
             h.FindNPI(npc);
             h.Timer();
@@ -75,14 +76,21 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                     ShootMove();
                     break;
                 case 1:
-                    Swoop();
+                    if (h.preSwoop)
+                    {
+                        PreSwoop();
+                    }
+                    else
+                    {
+                        Swoop();
+                    }
                     break;
             }
         }
 
         public void pos(Vector2 np)
         {
-            npc.position = np - new Vector2(wi / 2, he / 2);
+            npc.position = np - new Vector2(npc.width / 2, npc.height / 2);
         }
 
         public void Shoot()
@@ -96,7 +104,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                 h.turbo = false;
                 toP.Normalize();
                 toP *= 10;
-                if (h.pTimer[1] % 30 == 0)
+                if (h.pTimer[0] % 30 == 0)
                 {
                     h.Fluc(ref h.rand, 100, 20, 1);
                     Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 65);
@@ -124,7 +132,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             MoveTo(target, h.vel);    
         }
 
-        public void MoveTo(Vector2 target, float speed)
+        public bool MoveTo(Vector2 target, float speed) //bool tells you when movement is finished
         {
             h.testPos(target);
             nv = target - npc.Center;
@@ -132,27 +140,70 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             {
                 //npc.velocity = Vector2.Zero;
                 nv /= 2;
+                
             }
             else
             {
                 nv.Normalize();
                 nv *= speed;
             }
+            //ErrorLogger.Log(nv.ToString());
             npc.velocity = nv;
+            if (nv.Length() < 0.01f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void PreSwoop()
+        {
+            if (h.swpStrt)
+            {
+
+                h.swpStrt = false;
+                h.swpNPC = npc.Center;
+                h.swpOrig = h.swpNPC + new Vector2(0, 100);
+                h.swpPlyr = Main.player[h.NPI].Center;
+                h.swpPnt = h.swpPlyr - npc.Center + new Vector2(100 * h.RHS, -50);
+            }
+            if (MoveTo(new Vector2(h.swpNPC.X, h.swoopFormula(h.swpNPC.X - h.swpOrig.X) + h.swpOrig.Y), 8))
+            {
+                h.preSwoop = false;
+            }
         }
 
         public void Swoop()
         {
-            npc.position.Y = h.swoopFormula(Main.player[h.NPI].position,npc.position.X);
+            h.testPos(h.swpPnt);
+            h.testPos(h.swpOrig);
+            npc.velocity.X = h.accelerate();
+            pos(new Vector2(npc.Center.X, h.swoopFormula(npc.Center.X - h.swpOrig.X) + h.swpOrig.Y));
+            if(Math.Abs(npc.Center.X - h.swpPlyr.X + (-100*h.RHS)) < Math.Abs(npc.velocity.X) * 2)
+            {
+                h.passedPlayer = true;
+            }
+            if (npc.Center.Y - h.swpNPC.Y < 5 && h.pTimer[1] > 35)
+            {
+                h.swpStrt = true;
+                h.preSwoop = true;
+                h.passedPlayer = false;
+                h.phase--;
+                h.RHS *= -1;
+                h.pTimer[1] = 0;
+            }
         }
 
         //draw
         public void FindQuadrant(ref int q, ref float rad,Vector2 v)
 		{
 			// q is quadrant, r is rotation, v is vector
-			rad = (float)Math.Atan2(v.Y,v.X); 
+			rad = h.swpStrt ? (float)Math.Atan2(v.Y,v.X) : rad; 
             h.real = rad + 3.14f;
-            h.rec("FQ", ref h.real, Main.player[h.NPI].velocity);
+            h.rec("FQ", ref h.real, Main.player[h.NPI].velocity, npc.Center);
             q = h.inq(h.real,0,90) ? 1 : q;
 			q = h.inq(h.real,90,180) ? 2 : q;
             q = h.inq(h.real,180,270) ? 3 : q;
@@ -187,6 +238,11 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             {
                 h.se = SpriteEffects.FlipVertically;
             }
+            if(!h.swpStrt)
+            {
+                h.se = h.se | SpriteEffects.FlipHorizontally;
+            }
+            
         }
 		
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -195,13 +251,12 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             {
                 //Counter();
                 AssignDrawVars();
-                //CanShoot();
                 // to make it 0 - 360, rather than 0 - 180 then 0 - -180 (find quadrant)
                 h.RestrictRot();
                 h.real -= h.r(180);
                 h.real += h.real < 0 ? h.r(360) : 0;
                 h.real -= 3.14f;
-                h.rot = h.real;
+                h.rot = h.swpStrt ? h.real : h.rot;
                 if (h.qnt == 1 || h.qnt == 4)
                 {
                     FindRotPnt(-112, 50, ref h.pMth); //find mouth //-120 ,34
@@ -217,10 +272,5 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 			return false;
 		}
 
-        public override bool CheckDead()
-        {
-            npc.active = false;
-            return true;
-        }
     }	
 }

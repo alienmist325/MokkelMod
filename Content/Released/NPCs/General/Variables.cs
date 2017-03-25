@@ -7,33 +7,34 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class Helper
 {
-	//FindNPI
-	public byte NPI = 0;//nearest player index
-	public float curDist = 0;
-	public float minDist = 0;
-	public Vector2 curVect;
-	public Vector2 minVect;//vector between npi and npc
+    //FindNPI
+    public byte NPI = 0;//nearest player index
+    public float curDist = 0;
+    public float minDist = 0;
+    public Vector2 curVect;
+    public Vector2 minVect;//vector between npi and npc
 
     //general
-	public int qnt;
-	public Vector2 pMth = Vector2.Zero;
-	public Vector2 pEgg = Vector2.Zero;
+    public int qnt;
+    public Vector2 pMth = Vector2.Zero;
+    public Vector2 pEgg = Vector2.Zero;
     public float real = 0;
 
     public int[] dif = new int[2] { 1, 1 };
 
     //Draw sprite
     public float rot = 0f;
-	public Vector2 screenPos;
-	public Texture2D brdMthr;
-	public Rectangle drawnRegion;
-	public SpriteEffects se; // left = none
-	public int frameNum = 0;
+    public Vector2 screenPos;
+    public Texture2D brdMthr;
+    public Rectangle drawnRegion;
+    public SpriteEffects se; // left = none
+    public int frameNum = 0;
 
     //phases
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
-    public byte[] pTimer = new byte[2]; //new byte[max phases] phases
+    public int[] pTimer = new int[2]; //new byte[max phases] phases
+    public int[] pMax = new int[2] { 299, 10000 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
@@ -47,8 +48,15 @@ public class Helper
 
     //phase 1
     public Vector2 swpPnt;
+    public Vector2 swpOrig;
+    public Vector2 swpNPC;
+    public bool swpStrt = true;
+    public bool preSwoop = true;
+    public bool passedPlayer = false;
+    public Vector2 swpPlyr;
+    public float velocity = 0.1f;
 
-    public void rec(string a, ref float r, Vector2 pv)
+    public void rec(string a, ref float r, Vector2 pv, Vector2 nv)
     {
         Main.NewText(a +
             " Deg: " + ((int)d(rot)).ToString() +
@@ -62,9 +70,14 @@ public class Helper
             " broodVel: " + vel.ToString() +
             " box: " + rand.ToString() +
             " turbo: " + turbo.ToString() +
-            " phase: " + phase.ToString()
+            " phase: " + phase.ToString() +
+            " pTimer: " + pTimer[phase].ToString() +
+            " swpOrig: " + swpOrig.ToString() +
+            " swpStrt: " + swpStrt.ToString() +
+            " se: " + se.ToString() +
+            " pos: " + nv.ToString()
             );
-        
+
     }
 
     public void FindNPI(NPC npc)
@@ -91,31 +104,31 @@ public class Helper
         minVect = curVect;
     }
 
-    public float away(Vector2 a,Vector2 b)
+    public float away(Vector2 a, Vector2 b)
     {
         Vector2 c;
         c = Vector2.Subtract(a, b);
         return c.Length();
     }
 
-	public float r(float deg)
-	{
-		//degrees to radians
-		return (float)MathHelper.ToRadians(deg);
-	}
+    public float r(float deg)
+    {
+        //degrees to radians
+        return (float)MathHelper.ToRadians(deg);
+    }
 
     public float d(float rad)
     {
         //radians to degrees
         return (float)MathHelper.ToDegrees(rad);
     }
-	
-	public bool inq(float n,int l,int h)
-	{
-		//test inequality h is highest, l is lowest
-		//specifically if an angle in radians is between l and h
-		return (r(l) < n && n < r(h));
-	}
+
+    public bool inq(float n, int l, int h)
+    {
+        //test inequality h is highest, l is lowest
+        //specifically if an angle in radians is between l and h
+        return (r(l) < n && n < r(h));
+    }
 
     public void RestrictRot()
     {
@@ -138,16 +151,16 @@ public class Helper
         {
             real = r(190);
         }
-        
+
     }
-    
+
     public void Timer()
     {
         //0 controls wing flapping
         //1 controls
         //timer
-        timer[0]++; 
-        switch(timer[0])
+        timer[0]++;
+        switch (timer[0])
         {
             case 5:
                 frameNum = 1;
@@ -162,14 +175,15 @@ public class Helper
             timer[1] += timer[1] < maxi ? 1 : -1;
             timer[1] = timer[1] == maxi ? 0 : timer[1];
         }
-        
-        for (byte i = 1; i < 2; i++)
+
+        for (byte i = 0; i < 2; i++)
         {
-            pTimer[i] += (byte)(phase == i ? 1 : 0);
+            pTimer[i] += phase == i ? 1 : 0;
+            pTimer[i] = pTimer[i] > pMax[i] ? 0 : pTimer[i];
         }
 
         //phase = timer[1] == 300 ? 2 : phase;
-        
+
     }
 
     public bool canShoot(Vector2 vecFrom)
@@ -177,11 +191,11 @@ public class Helper
         float r = vecFrom.ToRotation();
         r += 3.14f;
         float deg = d(r);
-        return 
+        return
             qnt == 1 && deg < 30 ||
             qnt == 2 && deg > 150 ||
             qnt == 3 && deg < 240 ||
-            qnt == 4 && deg > 300; 
+            qnt == 4 && deg > 300;
     }
 
     public void Fluc(ref int f, int max, int min, int no)
@@ -202,7 +216,7 @@ public class Helper
             //if your targ speed is very high (>5) and the player has slowed down (<4), slow down
             vel -= Math.Abs(pv.X) < 4 && Math.Abs(vel) > 5 ? 0.1f : 0f;
         }
-        maxi = (int)(Math.Abs(pv.X) *10); //maxi decides how big timer[1] must be to update (i.e. set to 0)
+        maxi = (int)(Math.Abs(pv.X) * 10); //maxi decides how big timer[1] must be to update (i.e. set to 0)
         upv = timer[1] == 0 ? pv : upv; //every 2 ticks update playerVel
         return Math.Abs(pv.X) > 4 ? upv * 30 : Vector2.Zero; // no extra dist if player is slow
     }
@@ -212,12 +226,33 @@ public class Helper
         Projectile.NewProjectile(pos, Vector2.Zero, 736, 0, 0f);
     }
 
-    public float swoopFormula(Vector2 pos,float x)//pos is useless half the time..
+    public float swoopFormula(float x)//pos is useless half the time..
     {
-        if (pTimer[1] == 0)
+
+        return (float)(-0.003 * Math.Pow(x - swpPnt.X, 2) + swpPnt.Y); //-0.0015
+    }
+
+    public float accelerate()
+    {
+        int max = 15;
+        int min = 3;
+        if (passedPlayer)
         {
-            swpPnt = pos;
+            velocity *= 0.95f;
+            if (Math.Abs(velocity) < min)
+            {
+                velocity = min;
+            }
         }
-        return (float)(0.03 * Math.Pow(x - swpPnt.X, 2) + swpPnt.Y);
+        else
+        {
+            velocity += 0.5f;//*= 1.05f;
+            if (Math.Abs(velocity) > max)
+            {
+                velocity = max;
+            }
+        }
+        
+        return Math.Abs(velocity) * RHS * -1;
     }
 }
