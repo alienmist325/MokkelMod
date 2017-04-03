@@ -9,6 +9,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 {
     public class GoblinZepplin : ModNPC
     {
+		private bool SpawnedCannon = false;
         public override void SetDefaults()
         {
             npc.noTileCollide = true;
@@ -28,7 +29,17 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
         public override void AI()
         {
-
+            npc.dontTakeDamage = true;
+            if (!SpawnedCannon)
+			{
+				NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType<GoblinCannon>(), ai0: npc.whoAmI);
+                npc.ai[3] = 1;
+				SpawnedCannon = true;
+			}
+			if (npc.ai[3] == 0)
+			{
+			npc.life = 0;	
+			}
             int NPCPosY = (int)(npc.position.Y + npc.height);
             int PlayerPos = (int)Main.player[npc.target].position.Y;
             int BlockDistanceFromPly = 13;
