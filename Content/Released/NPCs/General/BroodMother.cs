@@ -210,12 +210,12 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                 if (Main.tile[(int)tP.X, (int)tP.Y].active())
                 {
 
-                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"));
+                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"),0,1,npc.whoAmI);
                 }
                 else
                 {
                     ErrorLogger.Log("yay");
-                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"));
+                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"),0,0,0);
                 }
             }
         }
