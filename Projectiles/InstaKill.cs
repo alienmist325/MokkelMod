@@ -11,7 +11,7 @@ namespace MokkelMod.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			projectile.name = ""; //Name of the projectile, only shows this if you get killed by it
+			projectile.name = "fate"; //Name of the projectile, only shows this if you get killed by it
 			projectile.width = 10; //Set the hitbox width
 			projectile.height = 10; //Set the hitbox height
 			projectile.timeLeft = 3; //The amount of time the projectile is alive for

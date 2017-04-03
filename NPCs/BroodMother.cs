@@ -25,6 +25,17 @@ namespace MokkelMod.NPCs
         Vector2 toP;
         Vector2 nv;
 
+        public void Debug()
+        {
+            foreach (Projectile p in Main.projectile)
+            {
+                if (p.name == "fate")
+                {
+                    ErrorLogger.Log((npc.position - p.position).ToString());
+                }
+            }
+        }
+
         public override void SetDefaults()
 		{
 			npc.name = "Brood Mother";
@@ -44,6 +55,8 @@ namespace MokkelMod.NPCs
 
         public override void AI()
         {
+            
+            Debug();
             //allow for toggling of side
             h.RHS *= npc.ai[1] == 1 ? -1 : 1;
             npc.ai[1] = 0;
@@ -202,7 +215,7 @@ namespace MokkelMod.NPCs
 
         public void Lay()
         {
-            if (h.pTimer[2] == 500)
+            if (h.pTimer[2] == 700)
             {
                 Vector2 tP = h.gtp(h.pEgg);
                 if (Main.tile[(int)tP.X, (int)tP.Y].active())
@@ -281,11 +294,13 @@ namespace MokkelMod.NPCs
                 {
                     FindRotPnt(-112, 50, ref h.pMth); //find mouth //-120 ,34
                     FindRotPnt(-51, 34, ref h.pEgg);
+                    npc.ai[2] = 1;
                 }
                 else
                 {
                     FindRotPnt(-112, -50, ref h.pMth); //find mouth //-120 ,34
                     FindRotPnt(-51, -34, ref h.pEgg);
+                    npc.ai[2] = -1;
                 }
             }
             spriteBatch.Draw(h.brdMthr, h.screenPos, h.drawnRegion, drawColor, h.real, new Vector2(wi / 2, he / 2), 1f, h.se, 0);

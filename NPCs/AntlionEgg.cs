@@ -41,10 +41,12 @@ namespace MokkelMod.NPCs
 
         public override void AI()
         {
-            ErrorLogger.Log(npc.ai[0].ToString());
+            ErrorLogger.Log(Main.npc[(int)npc.ai[1]].ai[2].ToString());
             if (npc.ai[0] == 1)
             {
-                MoveTo(Main.npc[(int)npc.ai[1]].position + new Vector2(30, 235), 2);
+                MoveTo(Main.npc[(int)npc.ai[1]].position + (new Vector2(Main.npc[(int)npc.ai[1]].ai[2]*58, 134)), 2);
+                npc.noGravity = true;
+                npc.noTileCollide = true;
             }
             tilePos = h.gtp(npc.Center);
             timer++;
