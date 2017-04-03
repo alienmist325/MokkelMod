@@ -40,10 +40,6 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 		
 		public override void AI()
 		{
-            if(npc.ai[0] == 1)
-            {
-                npc.position = Main.npc[(int)npc.ai[1]].position;
-            }
             tilePos = h.gtp(npc.Center);
 			if (Main.tile[(int)tilePos.X,(int)tilePos.Y].active())
 			{

@@ -85,6 +85,9 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                         Swoop();
                     }
                     break;
+                case 2:
+                    Lay();
+                    break;
             }
         }
 
@@ -194,6 +197,26 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                 h.phase--;
                 h.RHS *= -1;
                 h.pTimer[1] = 0;
+            }
+        }
+
+        public void Lay()
+        {
+            ErrorLogger.Log(h.pTimer[2].ToString());
+            if (h.pTimer[2] == 50)
+            {
+                ErrorLogger.Log("Eureka");
+                Vector2 tP = h.gtp(h.pEgg);
+                if (Main.tile[(int)tP.X, (int)tP.Y].active())
+                {
+
+                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"));
+                }
+                else
+                {
+                    ErrorLogger.Log("yay");
+                    NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"));
+                }
             }
         }
 

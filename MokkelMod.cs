@@ -121,7 +121,7 @@ namespace MokkelMod
             
         }
 
-        public override void ChatInput(string text, ref bool broadcast)
+        /*public override void ChatInput(string text, ref bool broadcast)
         {
             if (text.StartsWith("//"))
             {
@@ -143,6 +143,6 @@ namespace MokkelMod
                         this.GetModWorld<MokkelWorld>().dynastyBiome.dynastyY));                    
                 }
             }
-        }
+        }*/
 	}
 }

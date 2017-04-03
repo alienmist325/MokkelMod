@@ -33,8 +33,8 @@ public class Helper
     //phases
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
-    public int[] pTimer = new int[2]; //new byte[max phases] phases
-    public int[] pMax = new int[2] { 299, 10000 };
+    public int[] pTimer = new int[3]; //new byte[max phases] phases
+    public int[] pMax = new int[3] { 299, 10000, 51 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
@@ -55,6 +55,9 @@ public class Helper
     public bool passedPlayer = false;
     public Vector2 swpPlyr;
     public float velocity = 0.1f;
+
+    //phase 2
+    public bool preLay = true;
 
     public void rec(string a, ref float r, Vector2 pv, Vector2 nv)
     {
@@ -176,7 +179,7 @@ public class Helper
             timer[1] = timer[1] == maxi ? 0 : timer[1];
         }
 
-        for (byte i = 0; i < 2; i++)
+        for (byte i = 0; i < 3; i++)
         {
             pTimer[i] += phase == i ? 1 : 0;
             pTimer[i] = pTimer[i] > pMax[i] ? 0 : pTimer[i];
@@ -252,7 +255,17 @@ public class Helper
                 velocity = max;
             }
         }
-        
+
         return Math.Abs(velocity) * RHS * -1;
+    }
+
+    public Vector2 gtp(Vector2 xy)
+    {
+        //get tile position
+        //is it x or y, bool X tells you
+        xy /= 16;
+        xy.X = (int)xy.X;
+        xy.Y = (int)xy.Y;
+        return xy;
     }
 }
