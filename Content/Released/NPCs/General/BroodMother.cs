@@ -202,10 +202,8 @@ namespace MokkelMod.Content.Sprites.NPCs.General
 
         public void Lay()
         {
-            ErrorLogger.Log(h.pTimer[2].ToString());
-            if (h.pTimer[2] == 50)
+            if (h.pTimer[2] == 500)
             {
-                ErrorLogger.Log("Eureka");
                 Vector2 tP = h.gtp(h.pEgg);
                 if (Main.tile[(int)tP.X, (int)tP.Y].active())
                 {
@@ -214,7 +212,6 @@ namespace MokkelMod.Content.Sprites.NPCs.General
                 }
                 else
                 {
-                    ErrorLogger.Log("yay");
                     NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"),0,0,0);
                 }
             }

@@ -34,7 +34,7 @@ public class Helper
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
     public int[] pTimer = new int[3]; //new byte[max phases] phases
-    public int[] pMax = new int[3] { 299, 10000, 51 };
+    public int[] pMax = new int[3] { 299, 10000, 501 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
