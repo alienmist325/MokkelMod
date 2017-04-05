@@ -33,8 +33,8 @@ public class Helper
     //phases
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
-    public int[] pTimer = new int[3]; //new byte[max phases] phases
-    public int[] pMax = new int[3] { 299, 10000, 701 };
+    public int[] pTimer = new int[4]; //new byte[max phases] phases
+    public int[] pMax = new int[4] { 299, 10000, 701, 5 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
@@ -59,6 +59,11 @@ public class Helper
     //phase 2
     public bool preLay = true;
 
+    //phase 3
+    public int swHe = 242;
+    public int swWi = 296;
+    public int fn = 0;
+
     public void rec(string a, ref float r, Vector2 pv, Vector2 nv)
     {
         Main.NewText(a +
@@ -80,7 +85,7 @@ public class Helper
             " se: " + se.ToString() +
             " pos: " + nv.ToString()
             );
-
+        //ErrorLogger.Log(fn.ToString() + " " + pTimer[3].ToString());
     }
 
     public void FindNPI(NPC npc)
@@ -172,14 +177,14 @@ public class Helper
                 frameNum = 0;
                 timer[0] = 0;
                 break;
-        }
+        } 
         if (phase == 0)
         {
             timer[1] += timer[1] < maxi ? 1 : -1;
             timer[1] = timer[1] == maxi ? 0 : timer[1];
         }
 
-        for (byte i = 0; i < 3; i++)
+        for (byte i = 0; i < 4; i++)
         {
             pTimer[i] += phase == i ? 1 : 0;
             pTimer[i] = pTimer[i] > pMax[i] ? 0 : pTimer[i];

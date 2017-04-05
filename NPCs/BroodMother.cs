@@ -101,6 +101,10 @@ namespace MokkelMod.NPCs
                 case 2:
                     Lay();
                     break;
+                case 3:
+                    Swipe();
+                    break;
+                
             }
         }
 
@@ -230,6 +234,33 @@ namespace MokkelMod.NPCs
             }
         }
 
+        public void Swipe()
+        {
+            h.pMax[3] = (int)npc.ai[3];
+            if (h.pTimer[3] == h.pMax[3])
+            {
+                h.fn++;
+            }
+            if (h.fn > 4)
+            {
+                h.fn = 0;
+                h.phase = 0;
+                h.pTimer[3] = 0;
+            }
+        }
+
+        public void Swipe(string s)
+        {
+            if (h.phase == 3)
+            {
+                if (s == "adv")
+                {
+                    h.drawnRegion = new Rectangle(0, h.fn * h.swHe, h.swWi, h.swHe);
+                    h.brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMotherAtk");
+                }
+            }
+        }
+
         //draw
         public void FindQuadrant(ref int q, ref float rad,Vector2 v)
 		{
@@ -275,6 +306,7 @@ namespace MokkelMod.NPCs
             {
                 h.se = h.se | SpriteEffects.FlipHorizontally;
             }
+            Swipe("adv");
             
         }
 		

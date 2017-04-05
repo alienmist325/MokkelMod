@@ -10,9 +10,34 @@ using MokkelMod;
 
 namespace MokkelMod.Content.Sprites.NPCs.General
 {
+    public class Ticks : ModCommand
+    {
+        public override CommandType Type
+        {
+            get { return CommandType.Chat; }
+        }
 
+        public override string Command
+        {
+            get { return "t"; }
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            foreach (NPC n in Main.npc)
+            {
+                if (n.name == "Brood Mother")
+                {
+                    //ErrorLogger.Log("a " + n.whoAmI.ToString());
+                    n.ai[3] = int.Parse(args[0]);
+
+                }
+            }
+        }
+    }
     public class Commands : ModCommand
     {
+
         string[] s = new string[5] {
             "tgTm",
             "ph",
@@ -84,22 +109,14 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             }
             if (str.Substring(0, s[1].Length) == s[1])
             {
-                try
+                foreach (NPC n in Main.npc)
                 {
-                    mod.GetNPC("BroodMother").npc.ai[0] = int.Parse(str.Substring(2));
-                    foreach (NPC n in Main.npc)
+                    if (n.name == "Brood Mother")
                     {
-                        if (n.name == "Brood Mother")
-                        {
-                            //ErrorLogger.Log("a " + n.whoAmI.ToString());
-                            n.ai[0] = int.Parse(str.Substring(2));
+                        //ErrorLogger.Log("a " + n.whoAmI.ToString());
+                        n.ai[0] = int.Parse(str.Substring(2));
 
-                        }
                     }
-                }
-                catch (Exception e)
-                {
-
                 }
             }
             if (str == s[2])
