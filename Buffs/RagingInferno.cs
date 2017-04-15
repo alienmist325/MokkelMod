@@ -4,8 +4,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Buffs
-{
+namespace MokkelMod.Buffs
+{                   
     public class RagingInferno : ModBuff
     {
         public override void SetDefaults()

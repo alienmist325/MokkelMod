@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 
-namespace MokkelMod.Content.Sprites.NPCs.General
+namespace MokkelMod.NPCs
 {
     public class AntlionEgg : ModNPC
     {

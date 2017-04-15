@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Dusts
+namespace MokkelMod.Dusts
 {
 	public class Comet : ModDust
 	{

@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace MokkelMod.Content.Sprites.Projectiles.Item
+namespace MokkelMod.Projectiles
 {
 	public class Sandstorm : ModProjectile
 	{

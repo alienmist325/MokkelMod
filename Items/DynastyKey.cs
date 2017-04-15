@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Items.Misc
+namespace MokkelMod.Items
 {
     public class DynastyKey : ModItem
     {

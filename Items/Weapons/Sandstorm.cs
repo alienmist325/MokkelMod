@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Items.Weapons.Magic
+namespace MokkelMod.Items.Weapons
 {
 	public class Sandstorm : ModItem
 	{

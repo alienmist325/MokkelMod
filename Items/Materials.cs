@@ -1,10 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
+﻿using System;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Items.Materials
+namespace MokkelMod.Items
 {
 	public class IlluminescentEssence : ModItem
 	{
@@ -16,6 +13,17 @@ namespace MokkelMod.Content.Sprites.Items.Materials
 			item.maxStack = 999;
 			item.value = 1000;
 			item.rare = 3;
+		}
+	}
+
+	public class ZombieFlesh : ModItem
+	{
+		public override void SetDefaults()
+		{
+			item.name = "Zombie Flesh";
+			item.width = 24;
+			item.height = 24;
+			item.maxStack = 999;
 		}
 	}
 }

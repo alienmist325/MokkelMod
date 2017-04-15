@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace MokkelMod.Content.Sprites.Tiles
+namespace MokkelMod.Tiles
 {
 	public class BossTrophy : ModTile
 	{

@@ -5,7 +5,7 @@ using Terraria.UI;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Projectiles.Item
+namespace MokkelMod.Projectiles
 {	
 	public class InstaKill : ModProjectile 
 	{

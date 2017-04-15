@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Sprites.Tiles
+namespace MokkelMod.Tiles
 {
     public class JadestoneBlock_Tile : ModTile
     {

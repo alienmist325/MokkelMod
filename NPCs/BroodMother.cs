@@ -5,7 +5,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MokkelMod.Content.Sprites.NPCs.General
+namespace MokkelMod.NPCs
 {
 	public class BroodMother : ModNPC
 	{	

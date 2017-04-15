@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MokkelMod.Content.Sprites.Items
+namespace MokkelMod.Items
 {
 	public class ItemTweaks : GlobalItem
 	{

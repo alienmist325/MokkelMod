@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 
-namespace MokkelMod.Content.Sprites.Tiles
+namespace MokkelMod.Tiles
 {
     public class LockedDynastyChest_Tile : ModTile
     {
