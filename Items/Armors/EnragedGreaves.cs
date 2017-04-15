@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace MokkelMod.Items.Armors
-                   
+{                   
     public class EnragedGreaves : ModItem
 	{
 		public override bool Autoload(ref string name, ref string texture, IList<EquipType> equips)
