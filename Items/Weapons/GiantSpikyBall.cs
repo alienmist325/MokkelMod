@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID; //We are borrowing properties from IDs to easily make a Recipe
 using Terraria.ModLoader;
 
-namespace MokkelMod.Weapons
+namespace MokkelMod.Items.Weapons
 {
 public class GiantSpikyBall : ModItem
 {
