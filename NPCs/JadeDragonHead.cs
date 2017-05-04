@@ -11,6 +11,28 @@ namespace MokkelMod.NPCs
 
     public class JadeDragonHead : ModNPC
     {
+		private void WatchPlayer(Player player)
+		{
+			Vector2 look = npc.Center - player.Center;
+			LookAt(look);
+		}
+		private void LookAt(Vector2 look)
+		{
+			float angle = 0.5f * (float)Math.PI;
+			if (look.X != 0f)
+			{
+				angle = (float)Math.Atan(look.Y / look.X);
+			}
+			else if (look.Y < 0f)
+			{
+				angle += (float)Math.PI;
+			}
+			if (look.X < 0f)
+			{
+				angle += (float)Math.PI;
+			}
+			npc.rotation = angle - 90f;
+		}
         public override void SetDefaults()
         {
             npc.displayName = "Jade Dragon";
@@ -33,12 +55,21 @@ namespace MokkelMod.NPCs
             npc.buffImmune[20] = true;
             npc.buffImmune[24] = true;
             npc.buffImmune[39] = true;
+			Main.npcFrameCount[npc.type] = 3;
         }
-
+		public override void FindFrame(int frameHeight)
+        {
+            npc.frameCounter++;
+        }
         public override void AI()
         {
+			npc.TargetClosest(true);
             
-            
+            Player player = Main.player[npc.target];
+			WatchPlayer(player);
+			npc.velocity += Vector2.Normalize((player.Center - npc.Center) * 2f);
+			 npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -5, 5);
+                npc.velocity.Y = MathHelper.Clamp(npc.velocity.Y, -5, 5);
         }
-    }
+	}
 }
