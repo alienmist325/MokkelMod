@@ -36,6 +36,7 @@ namespace MokkelMod.NPCs
         }
 		 public override bool PreAI()
         {
+			npc.dontTakeDamage = true;
             if (npc.ai[3] > 0)
                 npc.realLife = (int)npc.ai[3];
             if (npc.target < 0 || npc.target == byte.MaxValue || Main.player[npc.target].dead)
@@ -69,7 +70,14 @@ namespace MokkelMod.NPCs
                 float dist = (length - (float)npc.width) / length;
                 float posX = dirX * dist;
                 float posY = dirY * dist;
- 
+				if (Main.player[npc.target].Center.X > npc.Center.X) 
+			{
+				npc.spriteDirection = 2;	
+			}
+			else  
+			{
+				npc.spriteDirection = 1;	
+			}
                 // Reset the velocity of this NPC, because we don't want it to move on its own
                 npc.velocity = Vector2.Zero;
                 // And set this NPCs position accordingly to that of this NPCs parent NPC.

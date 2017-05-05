@@ -11,6 +11,7 @@ namespace MokkelMod.NPCs
 
     public class JadeDragonHead : ModNPC
     {
+		private int counter = 50;
 		private void WatchPlayer(Player player)
 		{
 			Vector2 look = npc.Center - player.Center;
@@ -39,8 +40,8 @@ namespace MokkelMod.NPCs
             npc.noTileCollide = true;
             npc.npcSlots = 5f;
             npc.name = "JadeDragonHead";
-            npc.width = 32;
-            npc.height = 32;
+            npc.width = 60;
+            npc.height = 75;
             npc.aiStyle = -1;
             npc.netAlways = true;
             npc.damage = 80;
@@ -55,11 +56,6 @@ namespace MokkelMod.NPCs
             npc.buffImmune[20] = true;
             npc.buffImmune[24] = true;
             npc.buffImmune[39] = true;
-			Main.npcFrameCount[npc.type] = 3;
-        }
-		public override void FindFrame(int frameHeight)
-        {
-            npc.frameCounter++;
         }
 		  public override bool PreAI()
         {
@@ -74,7 +70,7 @@ namespace MokkelMod.NPCs
                     int latestNPC = npc.whoAmI;
  
                  
-                    int randomWormLength = Main.rand.Next(6, 7);
+                    int randomWormLength = Main.rand.Next(10, 12);
                     for (int i = 0; i < randomWormLength; ++i)
                     {
                        
@@ -95,13 +91,45 @@ namespace MokkelMod.NPCs
 		}
         public override void AI()
         {
+			npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 			npc.TargetClosest(true);
-            
+          
             Player player = Main.player[npc.target];
-			WatchPlayer(player);
-			npc.velocity += Vector2.Normalize((player.Center - npc.Center) * 2f);
-			 npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -5, 5);
+			if (player.Center.X > npc.Center.X) 
+			{
+				npc.spriteDirection = 2;	
+			}
+			else  
+			{
+				npc.spriteDirection = 1;	
+			}
+			if (npc.ai[2] == 0)
+			{
+				counter--;
+				npc.velocity += Vector2.Normalize((player.Center - npc.Center) * 2f);
+				npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -5, 5);
                 npc.velocity.Y = MathHelper.Clamp(npc.velocity.Y, -5, 5);
+				if (counter <= 0)
+				{
+					npc.ai[2] = 1;
+					counter = 30;
+					Main.PlaySound(SoundID.Roar, npc.position, 10);
+				}
+			}
+			if (npc.ai[2] == 1)
+			{
+				counter--;
+				npc.velocity += Vector2.Normalize((player.Center - npc.Center) * 2f);
+				npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -10, 10);
+                npc.velocity.Y = MathHelper.Clamp(npc.velocity.Y, -10, 10);
+				if (counter <= 0)
+				{
+					npc.ai[2] = 0;
+					counter = 120;
+					npc.velocity.X = 0f;
+					npc.velocity.Y = 0f;
+				}
+			}
         }
 	}
 }
