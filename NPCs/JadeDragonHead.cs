@@ -61,6 +61,38 @@ namespace MokkelMod.NPCs
         {
             npc.frameCounter++;
         }
+		  public override bool PreAI()
+        {
+            if (Main.netMode != 1)
+            {
+               
+                if (npc.ai[0] == 0)
+                {
+                   
+                    npc.realLife = npc.whoAmI;
+                 
+                    int latestNPC = npc.whoAmI;
+ 
+                 
+                    int randomWormLength = Main.rand.Next(6, 7);
+                    for (int i = 0; i < randomWormLength; ++i)
+                    {
+                       
+                        latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("JadeDragonBody"), npc.whoAmI, 0, latestNPC);
+                        Main.npc[(int)latestNPC].realLife = npc.whoAmI;
+                        Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
+                    }
+                    
+                    latestNPC = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("JadeDragonTail"), npc.whoAmI, 0, latestNPC);
+                    Main.npc[(int)latestNPC].realLife = npc.whoAmI;
+                    Main.npc[(int)latestNPC].ai[3] = npc.whoAmI;
+ 
+                    npc.ai[0] = 1;
+                    npc.netUpdate = true;
+                }
+            }
+			return true;
+		}
         public override void AI()
         {
 			npc.TargetClosest(true);
