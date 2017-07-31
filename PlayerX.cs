@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Content.Unreleased.Players
+namespace MokkelMod
 {
     public class PlayerX : ModPlayer
     {

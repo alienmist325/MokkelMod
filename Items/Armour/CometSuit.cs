@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace MokkelMod.Items.Armors
+namespace MokkelMod.Items.Armour
 {
 	[AutoloadEquip(EquipType.Body)]
     public class CometSuit : ModItem

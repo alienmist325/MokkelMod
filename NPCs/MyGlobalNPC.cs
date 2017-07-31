@@ -37,8 +37,7 @@ namespace MokkelMod.NPCs
 			}
 			
 			else if(new[] {3,430,132,186,187,432,433,188,434,189,435,200,436,223,161,431,254,52,53,536,319,320,321,332}.Contains(npc.type))
-            {
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ZombieFlesh"));	   
+            {	   
 			}
 			
 			else if(npc.type == NPCID.Harpy)

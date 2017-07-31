@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 
-namespace MokkelMod.Content.Sprites.NPCs
+namespace MokkelMod.NPCs
 {
     public delegate void ExtraAction();
    

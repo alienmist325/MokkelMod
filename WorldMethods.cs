@@ -8,7 +8,7 @@ using Terraria.World.Generation;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Generation;
 
-namespace MokkelMod.Content.Unreleased.Worlds
+namespace MokkelMod
 {
 	public class WorldMethods
 	{

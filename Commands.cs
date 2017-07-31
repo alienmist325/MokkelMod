@@ -4,11 +4,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-using MokkelMod.Content.Unreleased.Worlds;
 using MokkelMod;
 
-namespace MokkelMod.Content.Sprites.NPCs.General
+namespace MokkelMod.NPCs
 {
     public class Ticks : ModCommand
     {
@@ -121,11 +119,11 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             }
             if (str == s[2])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(mod).locked = true;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(mod).locked = true;
             }
             if (str == s[3])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(mod).locked = false;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(mod).locked = false;
                 foreach (Projectile p in Main.projectile)
                 {
                     if (p.Name == "TestPos")
@@ -137,7 +135,7 @@ namespace MokkelMod.Content.Sprites.NPCs.General
             }
             if (str == s[4])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(mod).locked = false;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(mod).locked = false;
             }
         }
 

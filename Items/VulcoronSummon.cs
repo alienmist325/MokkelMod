@@ -104,13 +104,6 @@ namespace MokkelMod.Items
 			recipe.AddRecipe();
 			recipe = new ModRecipe(mod);
 			
-			recipe.AddIngredient(null, "ZombieFlesh", 5);
-			recipe.AddIngredient(ItemID.Cobweb, 1);
-			recipe.AddTile(TileID.Loom);
-			recipe.SetResult(ItemID.Leather);
-			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
-			
 			recipe.AddIngredient(ItemID.BladeofGrass);
 			recipe.AddIngredient(ItemID.FieryGreatsword);
 			recipe.AddIngredient(ItemID.Muramasa);
