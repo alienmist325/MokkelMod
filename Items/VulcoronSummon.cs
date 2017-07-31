@@ -35,6 +35,11 @@ namespace MokkelMod.Items
 
 		public override bool UseItem(Player player)
 		{
+            //Main.PlaySound(10, -1, -1, 1, 1f, 0f);
+           // ModLoader.modToBuild = this.mod;
+            //ModLoader.reloadAfterBuild = true;
+            //ModLoader.buildAll = false;
+            //Main.menuMode = 10003;
             /*if(Main.dayTime)
 			{
 				Main.dayTime = false;

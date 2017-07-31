@@ -11,6 +11,7 @@ namespace MokkelMod.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sand Spit");
+            Main.projFrames[projectile.type] = 8;
         }
 
         public override void SetDefaults()
@@ -27,7 +28,7 @@ namespace MokkelMod.Projectiles
 			projectile.tileCollide = true;
 			projectile.damage = 0;
             projectile.knockBack = 0;
-			Main.projFrames[projectile.type] = 8;
+			
 		}
 		
 		public override void AI()

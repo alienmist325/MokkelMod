@@ -15,8 +15,8 @@ namespace MokkelMod.Projectiles
 
         public override void SetDefaults()
 		{
-			projectile.width = 16;
-			projectile.height = 16;
+			projectile.width = 8;
+			projectile.height = 8;
 			projectile.timeLeft = 100;//2
 			projectile.penetrate = -1;
 			projectile.ignoreWater = true;

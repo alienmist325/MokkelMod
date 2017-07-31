@@ -5,7 +5,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using MokkelMod.Content.Unreleased.Worlds;
 using MokkelMod;
 
 namespace MokkelMod
@@ -62,11 +61,11 @@ namespace MokkelMod
             }
             if (str == s[2])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(this).locked = true;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(this).locked = true;
             }
             if (str == s[3])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(this).locked = false;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(this).locked = false;
                 foreach (Projectile p in Main.projectile)
                 {
                     if (p.Name == "TestPos")
@@ -78,7 +77,7 @@ namespace MokkelMod
             }
             if (str == s[4])
             {
-                Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(this).locked = false;
+                Main.LocalPlayer.GetModPlayer<PlayerX>(this).locked = false;
             }
         }
 

@@ -84,7 +84,7 @@ namespace MokkelMod.NPCs
 
         public bool MoveTo(Vector2 target, float speed) //bool tells you when movement is finished
         {
-            h.testPos(target);
+            h.testPos(target, mod.ProjectileType("TestPos"));
             nv = target - npc.Center;
             if (nv.Length() < Math.Sqrt(2 * Math.Pow(h.vel, 2)) + 0.1f)
             {

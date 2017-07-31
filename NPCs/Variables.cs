@@ -34,7 +34,7 @@ public class Helper
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
     public int[] pTimer = new int[4]; //new byte[max phases] phases
-    public int[] pMax = new int[4] { 299, 10000, 2800, 5 };
+    public int[] pMax = new int[4] { 299, 500, 2800, 5 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
@@ -50,7 +50,7 @@ public class Helper
     public Vector2 swpPnt;
     public Vector2 swpOrig;
     public Vector2 swpNPC;
-    public bool swpStrt = true;
+    public bool swpStart = true;
     public bool preSwoop = true;
     public bool passedPlayer = false;
     public Vector2 swpPlyr;
@@ -65,6 +65,9 @@ public class Helper
     public int layTop = 1;
 
     //phase 3
+    public bool preSwipe = true;
+    public bool swiStart = true;
+    public Vector2 swiPlyr;
     public int swHe = 242;
     public int swWi = 296;
     public int fn = 0;
@@ -86,7 +89,7 @@ public class Helper
             " phase: " + phase.ToString() +
             " pTimer: " + pTimer[phase].ToString() +
             " swpOrig: " + swpOrig.ToString() +
-            " swpStrt: " + swpStrt.ToString() +
+            " swpStart: " + swpStart.ToString() +
             " se: " + se.ToString() +
             " pos: " + nv.ToString()
             );
@@ -234,9 +237,9 @@ public class Helper
         return Math.Abs(pv.X) > 4 ? upv * 30 : Vector2.Zero; // no extra dist if player is slow
     }
 
-    public void testPos(Vector2 pos)
+    public void testPos(Vector2 pos, int id)
     {
-        Projectile.NewProjectile(pos, Vector2.Zero, 736, 0, 0f);
+        Projectile.NewProjectile(pos, Vector2.Zero, id, 0, 0f);
     }
 
     public float swoopFormula(float x)//pos is useless half the time..

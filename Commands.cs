@@ -33,6 +33,28 @@ namespace MokkelMod.NPCs
             }
         }
     }
+    public class Summoner : ModCommand
+    {
+        public override CommandType Type
+        {
+            get
+            {
+                return CommandType.Chat;
+            }
+        }
+        public override string Command
+        {
+            get
+            {
+                return "sp";
+            }
+        }
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            Projectile.NewProjectile(Main.player[Main.myPlayer].position, Vector2.Zero, mod.ProjectileType(args[0]), 0, 0);
+        }
+    }
+
     public class Commands : ModCommand
     {
 
@@ -51,7 +73,7 @@ namespace MokkelMod.NPCs
 
         public override string Command
         {
-            get { return "a"; }
+            get { return "c"; }
         }
 
         public override void Action(CommandCaller caller, string input, string[] args)
