@@ -10,7 +10,7 @@ using MokkelMod;
 
 namespace MokkelMod
 {
-	public class MokkelMod : Mod
+	class MokkelMod : Mod
 	{
         string[] s = new string[5] {
             "tgTm",
@@ -47,7 +47,7 @@ namespace MokkelMod
                     this.GetNPC("BroodMother").npc.ai[0] = int.Parse(str.Substring(2));
                     foreach (NPC n in Main.npc)
                     {
-                        if (n.name == "Brood Mother")
+                        if (n.FullName == "Brood Mother")
                         {
                             //ErrorLogger.Log("a " + n.whoAmI.ToString());
                             n.ai[0] = int.Parse(str.Substring(2));
@@ -69,7 +69,7 @@ namespace MokkelMod
                 Main.LocalPlayer.GetModPlayer<Content.Unreleased.Players.PlayerX>(this).locked = false;
                 foreach (Projectile p in Main.projectile)
                 {
-                    if (p.name == "TestPos")
+                    if (p.Name == "TestPos")
                     {
                         ErrorLogger.Log(p.whoAmI.ToString());
                         p.ai[0] = -1;

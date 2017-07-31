@@ -202,7 +202,7 @@ namespace MokkelMod.Content.Sprites.NPCs
                                     npc.netUpdate = true;
                                 }
                                 if (Main.netMode == 2 && flag7)
-                                    NetMessage.SendData(19, -1, -1, "", 0, (float)index1, (float)(index2 - 1), (float)npc.direction, 0, 0, 0);
+                                    NetMessage.SendData(19, -1, -1, null, 0, (float)index1, (float)(index2 - 1), (float)npc.direction, 0, 0, 0);
                             }
                             if ((int)Main.tile[index1, index2 - 1].type == 388)
                             {
@@ -213,7 +213,7 @@ namespace MokkelMod.Content.Sprites.NPCs
                                     npc.netUpdate = true;
                                 }
                                 if (Main.netMode == 2 && flag7)
-                                    NetMessage.SendData(19, -1, -1, "", 4, (float)index1, (float)(index2 - 1), 0.0f, 0, 0, 0);
+                                    NetMessage.SendData(19, -1, -1, null, 4, (float)index1, (float)(index2 - 1), 0.0f, 0, 0, 0);
                             }
                         }
                     }

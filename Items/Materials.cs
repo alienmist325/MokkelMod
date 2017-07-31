@@ -4,11 +4,11 @@ using Terraria.ModLoader;
 
 namespace MokkelMod.Items
 {
-	public class IlluminescentEssence : ModItem
+	/*public class IlluminescentEssence : ModItem
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Illuminescent Essence";
+			item.Name = "Illuminescent Essence";
 			item.width = 32;
 			item.height = 32;
 			item.maxStack = 999;
@@ -21,18 +21,22 @@ namespace MokkelMod.Items
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Zombie Flesh";
+			item.Name = "Zombie Flesh";
 			item.width = 24;
 			item.height = 24;
 			item.maxStack = 999;
 		}
-	}
+	}*/
 
 	public class Comet : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Comet");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Comet";
 			item.width = 28;
 			item.height = 28;
 			item.maxStack = 999;
@@ -43,9 +47,13 @@ namespace MokkelMod.Items
 
 	public class CometBar : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Comet Bar");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Comet Bar";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
@@ -54,11 +62,11 @@ namespace MokkelMod.Items
 		}
 	}
 
-	public class EmpoweredIngot : ModItem
+	/*public class EmpoweredIngot : ModItem
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Empowered Ingot";
+			item.Name = "Empowered Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
@@ -82,7 +90,7 @@ namespace MokkelMod.Items
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Enraged Ingot";
+			item.Name = "Enraged Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
@@ -106,7 +114,7 @@ namespace MokkelMod.Items
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Inscribed Ingot";
+			item.Name = "Inscribed Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
@@ -124,17 +132,21 @@ namespace MokkelMod.Items
 			recipe.SetResult(this, 1);
 			recipe.AddRecipe();
 		}
-	}
+	}*/
 
 	public class MagmaIngot : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Magma Ingot");
+			Tooltip.SetDefault("Ouch! Too hot!");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Magma Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
-			AddTooltip("Ouch! Too hot!");
 			item.value = 5000;
 			item.rare = 4;
 		}
@@ -150,15 +162,20 @@ namespace MokkelMod.Items
 		}
 	}
 
+	
 	public class MagmaOre : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Magma Ore");
+			Tooltip.SetDefault("Burns with a hellish fire");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Magma Ore";
 			item.width = 16;
 			item.height = 16;
 			item.maxStack = 999;
-			AddTooltip("Burns with a hellish fire");
 			item.useTurn = true;
 			item.autoReuse = true;
 			item.useAnimation = 15;
@@ -171,13 +188,17 @@ namespace MokkelMod.Items
 
 	public class RadiantIngot : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Radiant Ingot");
+			Tooltip.SetDefault("It seems to glow and shine in your hand");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Radiant Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
-			AddTooltip("It seems to glow and shine in your hand");
 			item.value = 5000;
 			item.rare = 4;
 		}
@@ -194,13 +215,17 @@ namespace MokkelMod.Items
 
 	public class RadiantOre : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Radiant Ore");
+			Tooltip.SetDefault("Pulses with arcane power");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Radiant Ore";
 			item.width = 16;
 			item.height = 16;
 			item.maxStack = 999;
-			AddTooltip("Pulses with arcane power");
 			item.useTurn = true;
 			item.autoReuse = true;
 			item.useAnimation = 15;
@@ -211,11 +236,11 @@ namespace MokkelMod.Items
 		}
 	}
 
-	public class RoyalIngot : ModItem
+	/*public class RoyalIngot : ModItem
 	{
 		public override void SetDefaults()
 		{
-			item.name = "Royal Ingot";
+			item.Name = "Royal Ingot";
 			item.width = 30;
 			item.height = 24;
 			item.maxStack = 999;
@@ -233,5 +258,5 @@ namespace MokkelMod.Items
 			recipe.SetResult(this, 2);
 			recipe.AddRecipe();
 		}
-	}
+	}*/
 }

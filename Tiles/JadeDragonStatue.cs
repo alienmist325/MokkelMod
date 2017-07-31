@@ -13,9 +13,12 @@ namespace MokkelMod.Tiles
 {
     public class TEMP_JadeDragonTile_ITEM : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("TEMP JADEDRAGONTILE");
+        }
         public override void SetDefaults()
         {
-            item.name = "TEMP JADEDRAGONTILE";
             item.width = item.height = 16;
 
             item.useStyle = 1;

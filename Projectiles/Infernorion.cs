@@ -9,9 +9,13 @@ namespace MokkelMod.Projectiles
 {	
 	public class Infernorion : ModProjectile 
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Infernorion");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Infernorion"; //Name of the projectile, only shows this if you get killed by it
 			projectile.width = 60; //Set the hitbox width
 			projectile.height = 56; //Set the hitbox height
 			projectile.timeLeft = 600; //The amount of time the projectile is alive for

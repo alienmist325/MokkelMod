@@ -17,10 +17,14 @@ namespace MokkelMod.NPCs
 		int noProj;
 		float lightInc = 0.1f;
 		float light = 0.1f;
-		
-		public override void SetDefaults()
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Comet Head");
+        }
+
+        public override void SetDefaults()
 		{
-			npc.name = "Comet Head";
 			npc.width = 28;
 			npc.height = 28;
 			npc.value = 20;

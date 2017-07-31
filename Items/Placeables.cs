@@ -5,10 +5,14 @@ namespace MokkelMod.Items
 {
 	public class BroodmotherTrophy : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Broodmother Trophy");
+			Tooltip.SetDefault("Can be placed.");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Broodmother Trophy";
-			item.toolTip = "Can be placed.";
 			item.width = 30;
 			item.height = 30;
 			item.maxStack = 99;
@@ -27,10 +31,15 @@ namespace MokkelMod.Items
 
 	public class DynastyMill_Item : ModItem
 	{
+		
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dynasty Mill");
+			Tooltip.SetDefault("Can be placed.");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Dynasty Mill";
-			item.toolTip = "Can be placed.";
 			item.width = 26;
 			item.height = 26;
 			item.value = 50000;
@@ -52,10 +61,14 @@ namespace MokkelMod.Items
 
 	public class JadestoneBlock_Item : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Jadestone Block");
+			Tooltip.SetDefault("You spot a faint glow comming from the stone...");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Jadestone Block";
-			item.toolTip = "You spot a faint glow comming from the stone...";
 			item.width = 16;
 			item.height = 16;
 			item.maxStack = 999;

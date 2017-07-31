@@ -30,8 +30,9 @@ namespace MokkelMod.Tiles
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-
-            AddMapEntry(new Color(75, 35, 0), "Locked Dynasty Chest");
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Locked Dynasty Chest");
+            AddMapEntry(new Color(75, 35, 0), name);
             disableSmartCursor = true;
         }
 

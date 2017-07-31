@@ -10,10 +10,15 @@ namespace MokkelMod.NPCs
     public class GoblinZepplin : ModNPC
     {
 		private bool SpawnedCannon = false;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Goblin Zepplin");
+        }
+
         public override void SetDefaults()
         {
             npc.noTileCollide = true;
-            npc.name = "Goblin Zepplin";
             npc.width = 216;
             npc.height = 140;
             npc.aiStyle = -1;

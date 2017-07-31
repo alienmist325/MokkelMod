@@ -5,7 +5,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MokkelMod.NPCs
+namespace MokkelMod.Content.Sprites.NPCs.General
 {
 	public class BroodMother : ModNPC
 	{	
@@ -24,21 +24,25 @@ namespace MokkelMod.NPCs
         bool ft = true;
         Vector2 toP;
         Vector2 nv;
+        int oldPhase = 0;
 
         public void Debug()
         {
             foreach (Projectile p in Main.projectile)
             {
-                if (p.name == "fate")
+                if (p.Name == "fate")
                 {
                     ErrorLogger.Log((npc.position - p.position).ToString());
                 }
             }
         }
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Brood Mother");
+        }
 
         public override void SetDefaults()
 		{
-			npc.name = "Brood Mother";
 			npc.width = 260; //hitbox
 			npc.height = 64; //hitbox
 			npc.lifeMax = 4000;
@@ -53,9 +57,30 @@ namespace MokkelMod.NPCs
 			npc.knockBackResist = 0f;
 		}
 
+        public void Reset()
+        {
+            if (h.phase != oldPhase)
+            {
+                ErrorLogger.Log("Resetting");
+                for (int i = 0; i < 4; i++)
+                {
+                    h.pTimer[i] = 0;
+                }
+                //1 - swoop
+                h.preSwoop = true;
+                h.velocity = 0.1f;
+                h.passedPlayer = false;
+                //3 - swipe
+                h.fn = 0;
+                //2 - lay
+                h.preLay = true;
+            }
+            oldPhase = h.phase;
+        }
+
         public override void AI()
         {
-            
+            Reset();
             Debug();
             //allow for toggling of side
             h.RHS *= npc.ai[1] == 1 ? -1 : 1;
@@ -99,7 +124,14 @@ namespace MokkelMod.NPCs
                     }
                     break;
                 case 2:
-                    Lay();
+                    if (h.preLay)
+                    {
+                        PreLay();
+                    }
+                    else
+                    {
+                        Lay();
+                    };
                     break;
                 case 3:
                     Swipe();
@@ -149,14 +181,14 @@ namespace MokkelMod.NPCs
             Vector2 target;
             h.oldTarg = Main.player[h.NPI].Center;  
             target = h.oldTarg + new Vector2(400 * h.RHS, -200) + h.Turbo(Main.player[h.NPI].velocity);
-            MoveTo(target, h.vel);    
+            MoveTo(target, h.vel, false);    
         }
 
-        public bool MoveTo(Vector2 target, float speed) //bool tells you when movement is finished
+        public bool MoveTo(Vector2 target, float speed, bool prec) //bool tells you when movement is finished
         {
             h.testPos(target);
             nv = target - npc.Center;
-            if (nv.Length() < Math.Sqrt(2 * Math.Pow(h.vel, 2)) + 0.1f)
+            if (nv.Length() < Math.Sqrt(2 * Math.Pow(h.vel, 2)) + (0.1f * (!prec).ToInt()))
             {
                 //npc.velocity = Vector2.Zero;
                 nv /= 2;
@@ -190,9 +222,10 @@ namespace MokkelMod.NPCs
                 h.swpPlyr = Main.player[h.NPI].Center;
                 h.swpPnt = h.swpPlyr - npc.Center + new Vector2(100 * h.RHS, -50);
             }
-            if (MoveTo(new Vector2(h.swpNPC.X, h.swoopFormula(h.swpNPC.X - h.swpOrig.X) + h.swpOrig.Y), 8))
+            if (MoveTo(new Vector2(h.swpNPC.X, h.swoopFormula(h.swpNPC.X - h.swpOrig.X) + h.swpOrig.Y), 8, false))
             {
                 h.preSwoop = false;
+                h.swpStrt = true;
             }
         }
 
@@ -208,18 +241,31 @@ namespace MokkelMod.NPCs
             }
             if (npc.Center.Y - h.swpNPC.Y < 5 && h.pTimer[1] > 35)
             {
-                h.swpStrt = true;
-                h.preSwoop = true;
-                h.passedPlayer = false;
-                h.phase--;
                 h.RHS *= -1;
-                h.pTimer[1] = 0;
+                h.phase--;
+            }
+        }
+
+        public void PreLay()
+        {
+            if (h.layStart)
+            {
+                h.layStart = false;
+                h.layPnt = Main.player[h.NPI].position + new Vector2(0, -80);
+            }
+            if(MoveTo(h.layPnt, 5, false))
+            {
+                h.preLay = false;
+                h.layStart = true;
             }
         }
 
         public void Lay()
         {
-            if (h.pTimer[2] == 700)
+            Hover();
+            h.eggTimer++;
+            h.eggTimer = h.eggTimer > h.etMax ? 0 : h.eggTimer;
+            if (h.eggTimer == 700)
             {
                 Vector2 tP = h.gtp(h.pEgg);
                 if (Main.tile[(int)tP.X, (int)tP.Y].active())
@@ -232,6 +278,18 @@ namespace MokkelMod.NPCs
                     NPC.NewNPC((int)h.pEgg.X, (int)h.pEgg.Y, mod.NPCType("AntlionEgg"),0,0,0);
                 }
             }
+            if(h.pTimer[2] == 2800)
+            {
+                h.phase = 0;
+            }
+        }
+
+        public void Hover()
+        {
+            if(MoveTo(h.layPnt + new Vector2(0,5*h.layTop),0.03f*(2+h.layTop), true))
+            {
+                h.layTop *= -1;
+            }
         }
 
         public void Swipe()
@@ -243,20 +301,22 @@ namespace MokkelMod.NPCs
             }
             if (h.fn > 4)
             {
-                h.fn = 0;
                 h.phase = 0;
-                h.pTimer[3] = 0;
             }
         }
 
-        public void Swipe(string s)
+        public void SciADV(int s) //phase assign draw vals
         {
-            if (h.phase == 3)
+            if (s == h.phase)
             {
-                if (s == "adv")
+                if (s == 3)
                 {
                     h.drawnRegion = new Rectangle(0, h.fn * h.swHe, h.swWi, h.swHe);
                     h.brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMotherAtk");
+                }
+                if (s == 1)
+                {
+                    h.minVect = h.swpPnt;
                 }
             }
         }
@@ -288,7 +348,8 @@ namespace MokkelMod.NPCs
 		
 		public void AssignDrawVars()
 		{
-			h.screenPos = npc.position - Main.screenPosition;
+            SciADV(1);
+            h.screenPos = npc.position - Main.screenPosition;
 			h.screenPos -= new Vector2(0,120);
 			h.screenPos += new Vector2(wi/2,he/2);
 			h.brdMthr = mod.GetTexture("Content/Sprites/NPCs/General/BroodMothera");
@@ -306,7 +367,7 @@ namespace MokkelMod.NPCs
             {
                 h.se = h.se | SpriteEffects.FlipHorizontally;
             }
-            Swipe("adv");
+            SciADV(3);
             
         }
 		

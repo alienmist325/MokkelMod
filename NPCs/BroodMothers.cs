@@ -57,10 +57,14 @@ namespace MokkelMod.NPCs
 		float vel = 5;
 		Vector2 toP = Vector2.Zero;
 		Vector2 toPlayer;
-		
-		public override void SetDefaults()
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Brood Mother");
+        }
+
+        public override void SetDefaults()
 		{
-			npc.name = "Brood Mother";
 			npc.width = 260;
 			npc.height = 64;//276 - 128 - 92
 			npc.lifeMax = 4000;

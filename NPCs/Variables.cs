@@ -34,7 +34,7 @@ public class Helper
     public int phase = 0;
     public int[] timer = new int[2]; //new int[max timers] misc
     public int[] pTimer = new int[4]; //new byte[max phases] phases
-    public int[] pMax = new int[4] { 299, 10000, 701, 5 };
+    public int[] pMax = new int[4] { 299, 10000, 2800, 5 };
 
     //phase 0
     public int RHS = 1;//whether it is on the right hand side or not
@@ -58,6 +58,11 @@ public class Helper
 
     //phase 2
     public bool preLay = true;
+    public Vector2 layPnt;
+    public bool layStart = true;
+    public int eggTimer = 0;
+    public int etMax = 700;
+    public int layTop = 1;
 
     //phase 3
     public int swHe = 242;

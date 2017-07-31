@@ -9,9 +9,13 @@ namespace MokkelMod.Projectiles
 {	
 	public class HellfireGauntlet : ModProjectile 
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Hellfire Gauntlet");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Hellfire Gauntlet"; //Name of the projectile, only shows this if you get killed by it
 			projectile.width = 36; //Set the hitbox width
 			projectile.height = 36; //Set the hitbox height
 			projectile.timeLeft = 600; //The amount of time the projectile is alive for

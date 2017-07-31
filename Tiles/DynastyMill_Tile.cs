@@ -32,7 +32,9 @@ namespace MokkelMod.Tiles
             TileObjectData.addTile(Type);
 
 			disableSmartCursor = true;
-			AddMapEntry(new Color(120, 85, 60), "Dynasty Mill");
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Dynasty Mill");
+            AddMapEntry(new Color(120, 85, 60), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

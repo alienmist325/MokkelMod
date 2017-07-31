@@ -8,15 +8,18 @@ namespace MokkelMod.Items.Weapons
 {
 	public class DualingDragons : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Dualing Dragons");
+            Tooltip.SetDefault("Shoots two bullets at once\nBullets become cursed");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Dualing Dragons";
 			item.damage = 50;
 			item.ranged = true;
 			item.width = 70;
 			item.height = 28;
-			item.toolTip = "Shoots two bullets at once";
-			item.toolTip2 = "Bullets become cursed";
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 5;

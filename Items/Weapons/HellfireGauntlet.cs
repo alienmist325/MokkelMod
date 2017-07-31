@@ -9,15 +9,19 @@ namespace MokkelMod.Items.Weapons
 {
 public class HellfireGauntlet : ModItem
 {
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Hellfire Gauntlet");
+            Tooltip.SetDefault("Shoots a bouncy fireball");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Hellfire Gauntlet"; //Its display name
 			item.damage = 98; //The damage
 			item.magic = true; //Whether or not it is a magic weapon
 			item.width = 26; //Item width
 			item.height = 26; //Item height
 			item.maxStack = 1; //How many of this item you can stack
-			item.toolTip = "Shoots a bouncy fireball"; //The item’s tooltip
 			item.useTime = 30; //How long it takes for the item to be used
 			item.useAnimation = 60; //How long the animation of the item takes
 			item.knockBack = 2f; //How much knockback the item produces

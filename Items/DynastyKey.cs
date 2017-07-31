@@ -10,9 +10,12 @@ namespace MokkelMod.Items
 {
     public class DynastyKey : ModItem
     {
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dynasty Key");
+		}
         public override void SetDefaults()
         {
-            item.name = "Dynasty Key";
             item.width = 16;
             item.height = 16;
             item.maxStack = 99;

@@ -12,10 +12,14 @@ namespace MokkelMod.Projectiles
 		float osX;
 		int dir = 1;
 		float px;
-		
-		public override void SetDefaults()
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sandstorm");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Sandstorm";
 			projectile.width = 52;
 			projectile.height = 54;
 			projectile.timeLeft = 600;

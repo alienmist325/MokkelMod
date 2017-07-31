@@ -8,14 +8,18 @@ namespace MokkelMod.Items.Weapons
 {
 	public class JadeFan : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Jade Fan");
+            Tooltip.SetDefault("Shoots out 5 spikes");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Jade Fan";
 			item.damage = 65;
 			item.thrown = true;
 			item.width = 44;
 			item.height = 44;
-			item.toolTip = "Shoots out 5 spikes";
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 5;

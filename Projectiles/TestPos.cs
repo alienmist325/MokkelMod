@@ -8,10 +8,13 @@ namespace MokkelMod.Projectiles
 {
 	public class TestPos : ModProjectile
 	{
-		
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("TestPos");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "TestPos";
 			projectile.width = 16;
 			projectile.height = 16;
 			projectile.timeLeft = 100;//2

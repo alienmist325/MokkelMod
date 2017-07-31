@@ -7,9 +7,13 @@ namespace MokkelMod.Items.Weapons
 {
     public class Spazmatism : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Spazmatism");
+        }
+
         public override void SetDefaults()
         {
-            item.name = "Spazmatism";
             item.useStyle = 5;
             item.width = 24;
             item.height = 24;

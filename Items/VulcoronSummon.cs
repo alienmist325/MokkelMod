@@ -14,9 +14,14 @@ namespace MokkelMod.Items
 	{
         bool exists;
         int num;
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Summon the DEMISE");
+			Tooltip.SetDefault("[...]");
+		}
+		
 		public override void SetDefaults()
 		{
-			item.name = "Summon the demise";
 			item.width = 42;
 			item.height = 36;
 			item.maxStack = 20;
@@ -41,7 +46,7 @@ namespace MokkelMod.Items
             exists = false;
             foreach (NPC n in Main.npc)
             {
-                if (n.name == "Brood Mother" && n.active)
+                if (n.FullName == "Brood Mother" && n.active)
 
                 {
                     exists = true;

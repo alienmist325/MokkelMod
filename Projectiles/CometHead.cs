@@ -9,10 +9,13 @@ namespace MokkelMod.Projectiles
 {
 	public class CometHead : ModProjectile
 	{
-		
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Comet Head");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Comet Head";
 			projectile.width = 18;
 			projectile.height = 20;
 			projectile.timeLeft = 100;

@@ -7,20 +7,19 @@ using Terraria.ModLoader;
 
 namespace MokkelMod.Items.Armors
 {
+	[AutoloadEquip(EquipType.Head)]
     public class CometHelmet : ModItem
     {
-        public override bool Autoload(ref string name, ref string texture, IList<EquipType> equips)
-        {
-            equips.Add(EquipType.Head);
-            return true;
-        }
-
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Comet Helmet");
+			Tooltip.SetDefault("20% increased magic and melee damage");
+		}
+		
         public override void SetDefaults()
         {
-            item.name = "Comet Helmet";
             item.width = 28;
             item.height = 22;
-            item.toolTip = "20% increased magic and melee damage";
             item.defense = 14; // ??
         }
 

@@ -7,9 +7,13 @@ namespace MokkelMod.Items.Weapons
 {
     public class TheDestroyersEye : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("The Destroyer's Eye");
+        }
+
         public override void SetDefaults()
         {
-            item.name = "The Destroyer's Eye";
             item.useStyle = 5;
             item.width = 24;
             item.height = 24;

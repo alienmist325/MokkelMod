@@ -19,9 +19,13 @@ namespace MokkelMod.Projectiles
         int timer = 0;
         int Soundt = 100;
 
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Vulcoron's Hammer");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Vulcoron's Hammer";
 			projectile.width = 88;
 			projectile.height = 68;
 			projectile.timeLeft = 10;
@@ -50,7 +54,7 @@ namespace MokkelMod.Projectiles
             }
             projectile.timeLeft += 5;
                 
-            if (Main.npc[(int)projectile.ai[0]].name != "Vulcoron")
+            if (Main.npc[(int)projectile.ai[0]].FullName != "Vulcoron")
             {
                 projectile.Kill();
             }

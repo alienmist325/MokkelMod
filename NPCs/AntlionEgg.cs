@@ -16,9 +16,13 @@ namespace MokkelMod.NPCs
         Vector2 tilePos = Vector2.Zero;
         Vector2 nv;
 
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Antlion Egg");
+        }
+
         public override void SetDefaults()
         {
-            npc.name = "Antlion Egg";
             npc.width = 36;
             npc.height = 42;
             npc.lifeMax = 200;

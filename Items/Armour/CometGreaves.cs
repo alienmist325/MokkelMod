@@ -7,20 +7,19 @@ using Terraria.ModLoader;
 
 namespace MokkelMod.Items.Armors
 {
+	[AutoloadEquip(EquipType.Legs)]
     public class CometGreaves : ModItem
 	{
-		public override bool Autoload(ref string name, ref string texture, IList<EquipType> equips)
+		public override void SetStaticDefaults()
 		{
-			equips.Add(EquipType.Legs);
-			return true;
+			DisplayName.SetDefault("Comet Greaves");
+			Tooltip.SetDefault("10% increased magic and melee critical strike chance");
 		}
-
+		
 		public override void SetDefaults()
 		{
-            item.name = "Comet Greaves";
 			item.width = 28;
             item.height = 14;
-            item.toolTip = "10% increased magic and melee critical strike chance";
 			item.defense = 11;
 		}
 

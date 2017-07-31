@@ -10,7 +10,7 @@ namespace MokkelMod.Tiles
 	public class BossTrophy : ModTile
 	{
 		public override void SetDefaults()
-		{
+        {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
@@ -19,7 +19,9 @@ namespace MokkelMod.Tiles
 			TileObjectData.addTile(Type);
 			dustType = 7;
 			disableSmartCursor = true;
-			AddMapEntry(new Color(120, 85, 60), "Trophy");
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Trophy");
+            AddMapEntry(new Color(120, 85, 60), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

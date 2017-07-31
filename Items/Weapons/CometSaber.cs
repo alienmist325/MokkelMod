@@ -8,14 +8,18 @@ namespace MokkelMod.Items.Weapons
 {
 	public class CometSaber : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Comet Saber");
+            Tooltip.SetDefault("'Kylo Ren would be proud'");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Comet Saber";
 			item.damage = 73;
 			item.melee = true;
 			item.width = 54;
 			item.height = 52;
-			item.toolTip = "'Kylo Ren would be proud'";
 			item.useTime = 4;
 			item.useAnimation = 32;
 			item.useStyle = 1;

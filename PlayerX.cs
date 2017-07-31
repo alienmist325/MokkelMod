@@ -26,7 +26,7 @@ namespace MokkelMod.Content.Unreleased.Players
             {
                 foreach (Projectile p in Main.projectile)
                 {
-                    if (p.name == "TestPos")
+                    if (p.Name == "TestPos")
                     {
                         p.ai[0] = 1;
                     }

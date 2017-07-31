@@ -43,10 +43,5 @@ namespace MokkelMod.Items.Accessories
 			recipe.AddRecipe();
 		}
 		
-		public override bool Autoload(ref string name, ref string texture, IList<EquipType> equips)
-		{
-			equips.Add(EquipType.Shoes);
-			return true;
-		}
 	}
 }

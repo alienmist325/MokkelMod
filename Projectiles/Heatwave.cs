@@ -7,9 +7,13 @@ namespace MokkelMod.Projectiles
 {
 	public class Heatwave : ModProjectile
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Heatwave");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Heatwave";
 			projectile.width = 16; 
 			projectile.height = 16; 
 			projectile.penetrate = -1;

@@ -8,10 +8,13 @@ namespace MokkelMod.Projectiles
 {
 	public class SandSpit : ModProjectile
 	{
-		
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sand Spit");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Sand Spit";
 			projectile.width = 41;
 			projectile.height = 15;
 			projectile.timeLeft = 100;

@@ -9,9 +9,13 @@ namespace MokkelMod.Projectiles
 {	
 	public class JadeFan : ModProjectile 
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Jade Fan");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Jade Fan"; //Name of the projectile, only shows this if you get killed by it
 			projectile.width = 14; //Set the hitbox width
 			projectile.height = 14; //Set the hitbox height
 			projectile.timeLeft = 3600; //The amount of time the projectile is alive for

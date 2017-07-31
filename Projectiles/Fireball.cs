@@ -8,10 +8,13 @@ namespace MokkelMod.Projectiles
 {
 	public class Fireball : ModProjectile
 	{
-		
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Fireball");
+        }
+
+        public override void SetDefaults()
 		{
-			projectile.name = "Fireball";
 			projectile.width = 20;
 			projectile.height = 20;
 			projectile.timeLeft = 100;

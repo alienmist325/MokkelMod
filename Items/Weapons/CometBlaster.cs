@@ -9,15 +9,19 @@ namespace MokkelMod.Items.Weapons
 {
 public class CometBlaster : ModItem
 {
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Comet Blaster");
+            Tooltip.SetDefault("Shoots out small laser pulses");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Comet Blaster"; //Its display name
 			item.damage = 63; //The damage
 			item.magic = true; //Whether or not it is a magic weapon
 			item.width = 30; //Item width
 			item.height = 22; //Item height
 			item.maxStack = 1; //How many of this item you can stack
-			item.toolTip = "Shoots out small laser pulses"; //The item’s tooltip
 			item.useTime = 15; //How long it takes for the item to be used
 			item.useAnimation = 15; //How long the animation of the item takes
 			item.knockBack = 1f; //How much knockback the item produces

@@ -11,12 +11,14 @@ namespace MokkelMod.NPCs
 
     public class JadeDragonHead : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Jade Dragon");
+        }
         public override void SetDefaults()
         {
-            npc.displayName = "Jade Dragon";
             npc.noTileCollide = true;
             npc.npcSlots = 5f;
-            npc.name = "JadeDragonHead";
             npc.width = 32;
             npc.height = 32;
             npc.aiStyle = -1;

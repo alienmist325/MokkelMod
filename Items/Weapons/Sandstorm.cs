@@ -8,15 +8,19 @@ namespace MokkelMod.Items.Weapons
 {
 	public class Sandstorm : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sandstorm");
+            Tooltip.SetDefault("Sends out a raging tornado.");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Sandstorm"; 
 			item.damage = 24;
 			item.magic = true;
 			item.width = 28;
 			item.height = 32;
 			item.maxStack = 1;
-			item.toolTip = "Sends out a raging tornado.";
 			item.useTime = 40;
 			item.useAnimation = 40;
 			item.knockBack = 1f;

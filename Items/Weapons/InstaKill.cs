@@ -9,15 +9,19 @@ namespace MokkelMod.Items.Weapons
 {
 public class InstaKill : ModItem
 {
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("InstaKill");
+            Tooltip.SetDefault("INSTAKILL");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "InstaKill"; //Its display name
 			item.damage = 10000000; //The damage
 			item.magic = true; //Whether or not it is a magic weapon
 			item.width = 10; //Item width
 			item.height = 10; //Item height
 			item.maxStack = 1; //How many of this item you can stack
-			item.toolTip = "INSTAKILL"; //The item’s tooltip
 			item.useTime = 5; //How long it takes for the item to be used
 			item.useAnimation = 5; //How long the animation of the item takes
 			item.knockBack = 2f; //How much knockback the item produces

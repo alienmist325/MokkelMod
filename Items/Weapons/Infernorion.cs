@@ -8,14 +8,18 @@ namespace MokkelMod.Items.Weapons
 {
 	public class Infernorion : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Infernorion");
+            Tooltip.SetDefault("The hammer wielded by the master of the core");
+        }
+
+        public override void SetDefaults()
 		{
-			item.name = "Infernorion";
 			item.damage = 140;
 			item.melee = true;
 			item.width = 60;
 			item.height = 56;
-			item.toolTip = "The hammer wielded by the master of the core";
 			item.useTime = 40;
 			item.useAnimation = 40;
 			item.useStyle = 1;

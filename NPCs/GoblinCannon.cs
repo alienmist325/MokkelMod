@@ -12,10 +12,14 @@ namespace MokkelMod.NPCs
     {
         private NPC parent { get { return Main.npc[(int)npc.ai[0]]; } set { npc.ai[0] = value.whoAmI; } }
 		private int counter = 0;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Cannon");
+        }
+
         public override void SetDefaults()
         {
-            npc.name = "Cannon";
-            npc.displayName = "Cannon";
             npc.aiStyle = -1;
             npc.lifeMax = 1000;
             npc.damage = 23;

@@ -5,5 +5,5 @@ homepage = http://forums.terraria.org/index.php?threads/mokkels-mod-v1-0-coders-
 hideCode = false
 hideResources = false
 includeSource = true
-buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, .git\*, ExampleMod\*, *.dll, *.gitignore, *.gitattributes
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, .git\*, _Excluded\*, *.dll, *.gitignore, *.gitattributes
 includePDB = true

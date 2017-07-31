@@ -9,9 +9,13 @@ namespace MokkelMod.Projectiles
 {	
 	public class CometBlaster : ModProjectile 
 	{
-		public override void SetDefaults()
-		{
-			projectile.name = "Comet Blaster"; //Name of the projectile, only shows this if you get killed by it
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Comet Blaster");
+        }
+
+        public override void SetDefaults()
+        {
 			projectile.width = 16; //Set the hitbox width
 			projectile.height = 16; //Set the hitbox height
 			projectile.timeLeft = 3600; //The amount of time the projectile is alive for
