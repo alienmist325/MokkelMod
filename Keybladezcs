@@ -1,0 +1,187 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using System;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace MokkelMod
+{
+	public class Keyblade : ModItem
+	{
+		int cx;
+		int cy;
+        int noX;
+        int noY;
+        int hx;
+        int hy;
+        int hh;
+        int hw;
+		
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Keyblade");
+			Tooltip.SetDefault("Being both a sword and a key, this weapon can unlock all.");
+		}
+		public override void SetDefaults()
+		{
+			item.damage = 86;
+			item.melee = true;
+			item.width = 46;
+			item.height = 50;
+			item.useTime = 20;
+			item.useAnimation = 20;
+			item.useStyle = 1;
+            item.shootSpeed = 14f;
+            item.knockBack = 2f;
+			item.value = 10000;
+			item.rare = 8;
+			item.UseSound = SoundID.Item1;
+			item.autoReuse = true;
+            item.channel = true;
+            item.glowMask = 102;
+        }
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                //item.useStyle = 2;
+                //item.noUseGraphic = false;
+                //item.UseSound = SoundID.Item13;
+                //item.useTime = 20;
+                //item.useAnimation = 20;
+                //item.damage = 40;
+                //item.shootSpeed = 14f;
+                //item.knockBack = 2f;
+                ////item.shoot = 460;
+                //item.shoot = ProjectileID.ChargedBlasterCannon;
+                //item.magic = true;
+                //item.mana = 14;
+                //item.channel = true;
+                item.useStyle = 3;
+                item.useAnimation = 20;
+                item.useTime = 20;
+                item.width = 16;
+                item.height = 16;
+                item.damage = 50;
+                item.UseSound = SoundID.Item13;
+                item.shoot = 460;
+                item.mana = 14;
+                item.value = Item.sellPrice(0, 10, 0, 0);
+                item.noMelee = true;
+                item.noUseGraphic = true;
+                item.magic = true;
+                item.channel = true;
+                item.glowMask = 102;
+            }
+            else
+            {
+                item.UseSound = SoundID.Item1;
+                item.melee = true;
+                item.noMelee = false;
+                item.noUseGraphic = false;
+                item.channel = false;
+                item.useStyle = 1;
+                item.useTime = 20;
+                item.useAnimation = 20;
+                item.damage = 85;
+                item.shoot = 0;
+            }
+            return base.CanUseItem(player);
+        }
+
+        //public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        //{
+        //    if (player.altFunctionUse == 2)
+        //    {
+        //        target.AddBuff(BuffID.Ichor, 60);
+        //    }
+        //    else
+        //    {
+        //        target.AddBuff(BuffID.OnFire, 60);
+        //    }
+        //}
+        public static bool IsChest(int type)
+        {
+            return type == 21 || TileLoader.ModChestName(type).Length > 0;
+        }
+        public void Convert(int i, int j, int size = 4)
+        {
+
+            if (IsChest(Main.tile[i, j].type))
+            {
+                int num = i;
+                int num2 = j;
+                if (Main.tile[i, j].frameX % 36 != 0)
+                {
+                    num--;
+                }
+                if (Main.tile[i, j].frameY % 36 != 0)
+                {
+                    num2--;
+                }
+                Chest.Unlock(num, num2);
+            }
+        }
+
+        public override void MeleeEffects(Player player, Rectangle hitbox)
+        {
+            hx = hitbox.X;
+            hy = hitbox.Y;
+            hh = hitbox.Height;
+            hw = hitbox.Width;
+
+            //if (Main.rand.Next(3) == 0)
+            //{
+            if (player.altFunctionUse == 2)
+            {
+                Convert((int)(hitbox.X + (float)(hitbox.Width / 2)) / 16, (int)(hitbox.Y + (float)(hitbox.Height / 2)) / 16, 2);
+
+
+                //int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, 169, 0f, 0f, 100, default(Color), 2f);
+                //Main.dust[dust].noGravity = true;
+                //Main.dust[dust].velocity.X += player.direction * 2f;
+                //Main.dust[dust].velocity.Y += 0.2f;
+            }
+            else
+            {
+                cx = (hitbox.X / 16);
+                cy = (hitbox.Y / 16);
+                noX = (int)Math.Ceiling((double)(hitbox.Width / 16));
+                noY = (int)Math.Ceiling((double)(hitbox.Height / 16));
+
+                for (int x = 0; x < noX; x++)
+                {
+                    for (int y = 0; y < noY; y++)
+                    {
+                        Projectile.NewProjectile(new Vector2(16 * (cx + x) + 8, 16 * (cy + y) + 8), Vector2.Zero, mod.ProjectileType("TestPos"), 0, 0);
+                        //if (IsChest(Main.tile[cx + x, cy + y].type))
+                        //    {
+                        //        Chest.Unlock(cx + x, cy + y);
+                        //    }
+                    }
+
+                    int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustID.Fire, player.velocity.X * 0.2f + (float)(player.direction * 3), player.velocity.Y * 0.2f, 100, default(Color), 2.5f);
+                    Main.dust[dust].noGravity = true;
+                }
+                //}
+            }
+        }
+
+        public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Keybrand, 1);
+            recipe.AddIngredient(ItemID.JungleKey, 1);
+            recipe.AddIngredient(ItemID.BrokenHeroSword, 1);
+            recipe.AddTile(TileID.CrystalBall);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
+}
